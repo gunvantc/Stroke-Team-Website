@@ -1,0 +1,27 @@
+{
+  "name": "stroke-team-website",
+  "version": "1.0.0",
+  "description": "Redesigned Stroke Team internal website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/punteek/Stroke-Team-Website.git"
+  },
+  "author": "Prateek Singh, Gunvant Chaudhari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/punteek/Stroke-Team-Website/issues"
+  },
+  "homepage": "https://github.com/punteek/Stroke-Team-Website#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}
