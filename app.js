@@ -43,11 +43,12 @@ app.get("/register", function(req, res){
     res.render("register");
 });
 
+// REGISTER - WILL BE MOVED TO ADMIN EVENTUALLY
 app.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
+    var newUser = new User({username: req.body.username, name: req.body.name});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            console.log("login failed");
+            console.log("register failed");
             return res.redirect("/");
         }
         passport.authenticate("local")(req, res, function(){
