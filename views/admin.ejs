@@ -1,0 +1,10 @@
+<h1>You have administrator priviledges on this page</h1>
+
+<table>
+    <% allUsers.forEach(function(user){ %>
+        <tr>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+        </tr>
+    <% }); %>
+</table>
