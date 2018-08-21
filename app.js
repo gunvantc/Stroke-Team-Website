@@ -70,14 +70,20 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-// timecard login
+// TIMECARD ROUTE (SHOULD BE IP BLOCKED)
 app.get("/timecard", function(req, res){
     // TODO: add check for IP
     res.render("timecard");
 });
 
+// USER STATISTICS
 app.get("/stats", function(req, res){
     res.render("user_stats");
+});
+
+// USER SCHEDULE INTERFACE
+app.get("/schedule", function(req, res){
+    res.render("schedule");
 });
 
 // START SERVER
