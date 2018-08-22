@@ -1,41 +1,63 @@
-#fuck{
-  color: red;
+.container-fluid {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+.normal-page{
+  background-color: #DCE5EF;
+  padding-top: 60px;
 }
 
-.cool-background{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
-background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
-
-.form-heading { color:#fff; font-size:23px;}
-.panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
-.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.login-page{
+  background-color: #DCE5EF;
+}
+.login-title{
+  text-align: center;
+  font-size: 40px;
+  color:#466b95;
+  /*color:#64419f;*/
+  /*color:#000000;*/
+  padding-right: 10%;
+}
+.heading-background { background-color: #456B96; }
+.form-heading { max-height: 40px;}
+.panel h2{ color:#444444; font-size:18px; margin:0 0 4px 0;}
+.panel p { color:#777777; font-size:14px; margin-bottom:10px; line-height:24px;}
 .login-form .form-control {
-  background: #f7f7f7 none repeat scroll 0 0;
-  border: 1px solid #d4d4d4;
-  border-radius: 4px;
+  background: /*#f7f7f7*/ #edf2f7 none repeat scroll 0 0;
+  border: 4px solid #d4d4d4;
+  border-radius: 5px;
   font-size: 14px;
   height: 50px;
   line-height: 50px;
 }
+
 .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
-  margin: 10px auto 30px;
-  max-width: 38%;
-  padding: 50px 70px 70px 71px;
+  margin: 5% 5% 5% auto;
+  padding: 10% 10% 10% 10%;
+  align-self: center;
+  color: #1C132A;
 }
 
 .login-form .form-group {
   margin-bottom:10px;
 }
-.login-form{ text-align:center;}
+#select-label{ 
+  margin-bottom:20px; 
+}
+.login-form{padding-right: 5%}
+.form-control-select{ padding-top: 30px; }
 .forgot a {
   color: #777777;
   font-size: 14px;
   text-decoration: underline;
 }
 .login-form  .btn.btn-primary {
-  background: #f0ad4e none repeat scroll 0 0;
-  border-color: #f0ad4e;
+  background: /*rgb(66,175,225)*/ #466b95 none repeat scroll 0 0;
+  border-color: #466b95;
   color: #ffffff;
   font-size: 14px;
   width: 100%;
@@ -46,13 +68,85 @@ background-repeat:no-repeat; background-position:center; background-size:cover; 
 .forgot {
   text-align: left; margin-bottom:30px;
 }
-.botto-text {
-  color: #ffffff;
-  font-size: 14px;
-  margin: auto;
-}
 .login-form .btn.btn-primary.reset {
-  background: #ff9900 none repeat scroll 0 0;
+  background: #C39841 none repeat scroll 0 0;
 }
 .back { text-align: left; margin-top:10px;}
 .back a {color: #444444; font-size: 13px;text-decoration: none;}
+.current-logins-tb-valid, .current-logins-tb-expired {
+  max-height: 125px;
+  margin:5px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 8px;
+  border-color: gray;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+}
+.current-logins-tb-valid span, .current-logins-tb-expired span{
+  color: #000000; font-size: 15px;
+}
+.current-logins-tb-valid p, .current-logins-tb-expired p{
+  color: #000000; font-size: 13px;
+}
+.current-logins-tb-valid {
+  background-image: radial-gradient(#9dff89, #e0f9db);
+}
+.current-logins-tb-expired {
+  background-image: radial-gradient(#fc7979, #fcc2c2);
+}
+.nav-right-links{
+  padding-right: 10px;
+  padding-bottom: 0px; 
+  padding-top: 0px;
+  font-size: 15px;
+  text-align: right;
+  color: white;
+}
+.nav-middle-links{
+  font-size: 15px;
+  text-align: center;
+}
+.nav-item a:link{color: white; text-decoration: none;}
+.nav-item a:visited{color: white; text-decoration: none;}
+.nav-item a:hover{color: rgb(200,200,200); text-decoration: none;}
+.nav-item a:active{color: white; text-decoration: none;}
+.nav-item{
+  padding-right:10px;
+}
+.navbar-page-title {
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+ }
+ .dropdown .dropdown-menu .dropdown-item{
+  color: black;
+  text-align: left;
+ }
+ .dropdown-toggle::after{
+  display: none;
+ }
+ .vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+.vertical-center .col-md-8{
+  padding-right: 0px;
+}
+.footer {
+  background-color: #1C132A;
+  color: #456B96;
+}
+.footer a:link{color: #456B96; text-decoration: none;}
+.footer a:visited{color: #456B96; text-decoration: none;}
+.footer a:hover{color: #9dbadb; text-decoration: none;}
+.footer a:active{color: #456B96; text-decoration: none;}

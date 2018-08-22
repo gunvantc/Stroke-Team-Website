@@ -1,8 +1,78 @@
-<h1>This is the login page!<h1>
+<!DOCTYPE HTML>
 
-<h1>Login!</h1>
-<form action="/" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" value="Login!">
-</form>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Redesigned Stroke Team internal website!">
+        <title>Stroke Website</title>
+
+        <!-- Bootstrap 4.1.3 CSS ONLY-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="/stylesheets/style.css">
+
+    </head>
+
+    <body class="login-page">
+	<div class="container-fluid" style="padding: 0px">
+	<div class = "row vertical-center">
+		<div class = "col-md-8">
+			<a href="https://www.strokeprogram.org/">
+				<img src="/images/SST Neuron Blue 2.png" class="img-fluid" alt="Visit SST External Website">
+			</a>
+		</div>
+
+		<div class = "col-md-4  text-center">
+			<div class="login-title">
+				<b>Internal Website</b>
+			</div>
+			<br>
+
+			<div class="login-form">
+			<div class="main-div">
+
+			    <div class="panel">
+			   		<h2>Member Login</h2>
+			   		<p>Please enter your email and password</p>
+			   	</div>
+
+			    <form id="Login" action="/" method="POST">
+
+			   		<!-- remember to change the app.js to log in via email-->
+			        <div class="form-group">
+			            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address">
+			        </div>
+
+			        <div class="form-group">
+			            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+			        </div>
+
+			        <div class="forgot">
+			        	<a href="reset.html">Forgot password?</a>
+					</div>
+
+			        <button type="submit" class="btn btn-primary">Login</button>
+
+			    </form>
+
+			</div>
+
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+<!--
+	<h1>Login!</h1>
+	<form action="/" method="POST">
+	    <input type="text" name="username" placeholder="username">
+	    <input type="password" name="password" placeholder="password">
+	    <input type="submit" value="Login!">
+	</form>
+-->
+
+    </body>
+</html>
+

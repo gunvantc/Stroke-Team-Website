@@ -77,6 +77,19 @@ app.get("/timecard", function(req, res){
     res.render("timecard");
 });
 
+
+// temporary route for preferences
+app.get("/preferences", function(req, res){
+    // check if logged in/admin
+    // pass in all required information from database about
+    // current preferences
+    res.render("preferences");
+});
+
+app.post("/preferences", function(req, res){
+    //logic for whenever a button is pressed
+})
+
 // USER STATISTICS
 app.get("/stats", function(req, res){
     res.render("user_stats");
@@ -95,6 +108,9 @@ app.get("/admin", function(req, res){
         else
             res.render("admin", {allUsers: allUsers});
     });
+
+app.get("/nr", function(req, res){
+    res.render("neurorounds");
 });
 
 // START SERVER
