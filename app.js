@@ -45,7 +45,7 @@ app.get("/register", function(req, res){
 
 // REGISTER - WILL BE MOVED TO ADMIN EVENTUALLY
 app.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username, email: req.body.email});
+    var newUser = new User({username: req.body.username, name: req.body.name});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log("register failed");
@@ -108,6 +108,7 @@ app.get("/admin", function(req, res){
         else
             res.render("admin", {allUsers: allUsers});
     });
+});
 
 app.get("/nr", function(req, res){
     res.render("neurorounds");
