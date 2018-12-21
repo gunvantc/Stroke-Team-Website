@@ -34,6 +34,7 @@ mongoose.connect(dburl);
 
 // landing-login page
 app.get("/", function(req, res){
+    // TODO: Check if you are signed in!!
     res.render("landing-login");
 });
 
@@ -49,6 +50,7 @@ app.post("/register", function(req, res){
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log("register failed");
+            console.log(err);
             return res.redirect("/");
         }
         passport.authenticate("local")(req, res, function(){
@@ -86,9 +88,9 @@ app.get("/preferences", function(req, res){
     res.render("preferences");
 });
 
-app.post("/preferences", function(req, res){
-    //logic for whenever a button is pressed
-})
+// app.post("/preferences", function(req, res){
+//     //logic for whenever a button is pressed
+// });
 
 // USER STATISTICS
 app.get("/stats", function(req, res){
@@ -108,6 +110,26 @@ app.get("/admin", function(req, res){
         else
             res.render("admin", {allUsers: allUsers});
     });
+});
+
+app.get("/admin/time-ins", function(req, res){
+    res.render("admin_time_ins");
+});
+
+app.get("/admin/student-list", function(req, res){
+    res.render("admin_students");
+});
+
+app.get("/admin/student-hours", function(req, res){
+    res.render("admin_hours");
+});
+
+app.get("/admin/preferences", function(req, res){
+    res.render("admin_preferences");
+});
+
+app.get("/admin/settings", function(req, res){
+    res.render("admin_settings");
 });
 
 app.get("/nr", function(req, res){

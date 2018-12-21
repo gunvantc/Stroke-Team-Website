@@ -1,45 +1,67 @@
+/* Random shit */
 .container-fluid {
-    padding-right: 15px !important;
-    padding-left: 15px !important;
     margin-right: auto;
     margin-left: auto;
 }
 .normal-page{
-  background-color: #DCE5EF;
-  padding-top: 60px;
+  /*background-color: #DCE5EF;*/
+  background: linear-gradient(#c4daf2, #ffffff) no-repeat center center fixed;
 }
 
 .login-page{
   background-color: #DCE5EF;
 }
-.login-title{
-  text-align: center;
-  font-size: 40px;
-  color:#466b95;
-  /*color:#64419f;*/
-  /*color:#000000;*/
-  padding-right: 10%;
+.container-offset{
+  padding-top: 59px;
 }
+.container-no-side-padding{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh; 
+
+  display: flex;
+  align-items: center;
+}
+.vertical-center .col-md-8{
+  padding-right: 0px;
+}
+
+
+
+/*Login box stuff below*/
 .heading-background { background-color: #456B96; }
 .form-heading { max-height: 40px;}
+.panel{
+  text-align: center;
+}
 .panel h2{ color:#444444; font-size:18px; margin:0 0 4px 0;}
 .panel p { color:#777777; font-size:14px; margin-bottom:10px; line-height:24px;}
 .login-form .form-control {
-  background: /*#f7f7f7*/ #edf2f7 none repeat scroll 0 0;
+  background: #edf2f7 none repeat scroll 0 0;
   border: 4px solid #d4d4d4;
   border-radius: 5px;
   font-size: 14px;
   height: 50px;
   line-height: 50px;
 }
-
 .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
-  margin: 5% 5% 5% auto;
+  margin: 5% 5% 5% 5%;
   padding: 10% 10% 10% 10%;
   align-self: center;
   color: #1C132A;
+}
+.main-div-timecard{
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 2px;
+  margin: 2% 20% 1% 20%;
+  padding: 5% 5% 5% 5%;
+  align-self: center;
+  color: #1C132A; 
 }
 
 .login-form .form-group {
@@ -48,7 +70,6 @@
 #select-label{ 
   margin-bottom:20px; 
 }
-.login-form{padding-right: 5%}
 .form-control-select{ padding-top: 30px; }
 .forgot a {
   color: #777777;
@@ -71,11 +92,15 @@
 .login-form .btn.btn-primary.reset {
   background: #C39841 none repeat scroll 0 0;
 }
-.back { text-align: left; margin-top:10px;}
-.back a {color: #444444; font-size: 13px;text-decoration: none;}
+.neuron-image{
+  opacity: 0;
+}
+
+
+/* Timecard stuff below*/
 .current-logins-tb-valid, .current-logins-tb-expired {
   max-height: 125px;
-  margin:5px;
+  margin: 5px 16.7% 5px 16.7%;
   padding: 10px;
   border-style: solid;
   border-width: 5px;
@@ -97,56 +122,303 @@
 .current-logins-tb-expired {
   background-image: radial-gradient(#fc7979, #fcc2c2);
 }
+.login-title{
+  text-align: center;
+  font-size: 40px;
+  color:#466b95;
+  /*color:#64419f;*/
+  /*color:#000000;*/
+}
+.login-footer{
+  text-align: center;
+  font-size: 20px;
+  color:#466b95;
+  padding-bottom: 15px;
+}
+.login-row{
+  opacity: 0;
+}
+
+
+
+/* navbar stuff below*/
 .nav-right-links{
-  padding-right: 10px;
   padding-bottom: 0px; 
   padding-top: 0px;
   font-size: 15px;
-  text-align: right;
+  text-align: center;
   color: white;
 }
 .nav-middle-links{
   font-size: 15px;
   text-align: center;
 }
+.nav-item-pad{
+  padding-right: 10px;
+}
+.navbar{
+  padding: 5px;
+}
 .nav-item a:link{color: white; text-decoration: none;}
 .nav-item a:visited{color: white; text-decoration: none;}
-.nav-item a:hover{color: rgb(200,200,200); text-decoration: none;}
+.nav-item a:hover{color: rgb(200,200,200) !important; text-decoration: none;}
 .nav-item a:active{color: white; text-decoration: none;}
-.nav-item{
-  padding-right:10px;
-}
 .navbar-page-title {
   color: white;
   font-size: 15px;
   padding: 5px;
 }
-.dropdown:hover .dropdown-menu {
-  display: block;
-  margin-top: 0;
- }
- .dropdown .dropdown-menu .dropdown-item{
+.dropdown .dropdown-menu .dropdown-item{
   color: black;
   text-align: left;
  }
- .dropdown-toggle::after{
+.dropdown-toggle::after{
   display: none;
  }
- .vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
 
-  display: flex;
+
+
+/*calendar stuff below*/
+.calendar-container{
+  width: calc(100vw-10px);
+  margin-right: -15px; 
+  margin-left: -15px;
+}
+.calendar-outer{
+  width: 100%;
+  min-width: 852px;
+  min-height: 900px;
+  background-color: white;
+}
+.calendar-top{
+  width: 100%;
+  min-width: 852px;
+  background-color: white;
+}
+.calendar-day-header, .calendar-element{
+  min-width:100px;
+  border: 1px solid rgb(200,200,200);
+  border-left-width: 0px;
+}
+.calendar-day-header{
+  min-height: 30px;
+  height: 4%;
+  padding-top: 2px;
+  border-top-width: 0px;
+}
+.calendar-offset{
+  width:6%;
+  min-width: 35px;
+  height: calc(2.78% + 10px);
+  min-height:5px;
+}
+.calendar-element{
+  min-height:25px;
+  height: 6.25%;
+  border-top-width: 0px;
+}
+.calendar-hour-element, .calendar-top-left{
+  width:6%;
+  min-width:35px;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+/*.calendar-element:hover{
+  background-color: black;
+}*/
+.calendar-hour-element{
+  padding-top: 9px;
+  min-height:25px;
+  height: 6.25%;
+  font-size: 12px;
+}
+.calendar-top-left{
+  min-height: 15px;
+  height: 1%;
+}
+.calendar-element-left{
+  border-left: 1px solid rgb(200,200,200);
+}
+.calendar-bottom-border{
+  border-bottom: 1px solid rgb(200,200,200);
+}
+.row-padding{
+  padding-left:0px;
+  padding-right:0px;
+  margin:0;
+}
+.zero-padding{
+  padding: 0;
+}
+.days, .hours{
+  color: rgb(100,100,100);
+}
+.green-time-form, .red-time-form{
+  min-width: 400px;
+  padding: 10px 2% 10px 2%;
+  margin: 0 calc(25% - 100px) 10px calc(25% - 100px);
   align-items: center;
+  align-content: center;
 }
-.vertical-center .col-md-8{
-  padding-right: 0px;
+.gr-form-title{
+  font-size: 20px;
 }
+.red-time-form .dropdown-times .form-control, .green-time-form .dropdown-times .form-control{
+  margin-left: 10px;
+}
+.pref-form{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.comments-text-area{
+  resize: none;
+  overflow: hidden;
+  min-height: 94px;
+  max-height: 400px;
+  max-width: 100%;
+}
+.dropdown-times{
+  /*padding-left:2vw;*/
+}
+.overlay-div{
+  position: absolute;
+  width: calc((100% - 35px)/7 - 4px);
+  min-width: 112px;
+  padding: 0;
+  border-radius: 5px;
+}
+.overlay-box{
+  padding: 2px 5px 5px 5px;
+  color: black;
+  opacity: 0;
+  line-height: normal;
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: calc(100% - 10px);
+}
+.overlay-box::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+.overlay-box::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+.overlay-box p{
+  margin-bottom: 0px;
+}
+.overlay-green{
+  border: 3px solid #73AD21;
+  background-color: #e8f7ea;
+}
+.overlay-red{
+  border: 3px solid red;
+  background-color: #f7e8e8;
+}
+.overlay-comment{
+  font-size:12px;
+  line-height: normal;
+}
+.overlay-time{
+  font-size:10px;
+  line-height: normal;
+}
+.expanded-div{
+  width: 400px;
+  height: auto;
+  position: absolute;
+  top: 20%;
+  left: calc((100% - 400px)/2);
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  opacity: 0.5;
+}
+.expanded-div p{
+  margin-bottom: 2px;
+}
+.event-button-r, .event-button-g{
+  font-size: 7px;
+}
+.overlay-row{
+  color: white;
+  font-weight: bold;
+}
+.overlay-g{
+  border-top: 1px solid #73AD21;
+  background-color: #73AD21;
+}
+.overlay-r{
+  border-top: 1px solid red;
+  background-color: red;
+}
+.overlay-right-g{
+  border-right: 1px solid white;
+}
+.overlay-right-r{
+  border-right: 1px solid white;
+}
+.event-button-g:hover{
+  background-color:#344f0f;
+  color:  #D3D3D3;
+  cursor: pointer;
+}
+.event-button-r:hover{
+  background-color:#4f0e0e;
+  color:  #D3D3D3;
+  cursor: pointer;
+}
+
+
+
+/* stats page stuff */
+.welcome{
+  margin: 10px;
+  padding: 10px 10px 10px 10px;
+  color: #64419f;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+
+/*  border: 1px solid #000;
+  border-radius: 5px;*/
+}
+.element-box{
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin: 5px;
+}
+.element-box h1{
+  font-weight: bold;
+  font-size: 20px;
+}
+.row-outer{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+
+/* Admin Page */
+.vertical-navbar{
+  background-color: #1C132A;
+}
+.welcome-text{
+  color: #456B96;
+  font-size: 20px;
+}
+
+
+/* Footer stuff below*/
 .footer {
   background-color: #1C132A;
   color: #456B96;
 }
-.footer a:link{color: #456B96; text-decoration: none;}
-.footer a:visited{color: #456B96; text-decoration: none;}
-.footer a:hover{color: #9dbadb; text-decoration: none;}
-.footer a:active{color: #456B96; text-decoration: none;}
+.footer a:link, .login-footer a:link{color: #456B96; text-decoration: none;}
+.footer a:visited, .login-footer a:visited{color: #456B96; text-decoration: none;}
+.footer a:hover, .login-footer a:hover{color: #9dbadb; text-decoration: none;}
+.footer a:active, .login-footer a:active{color: #456B96; text-decoration: none;}
