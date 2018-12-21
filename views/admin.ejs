@@ -1,10 +1,18 @@
-<h1>You have administrator priviledges on this page</h1>
+<% include ./partials/header %>
 
-<table>
-    <% allUsers.forEach(function(user){ %>
-        <tr>
-            <td><%= user.username %></td>
-            <td><%= user.email %></td>
-        </tr>
-    <% }); %>
-</table>
+<div class="container-fluid container-offset">
+
+	<% include ./partials/navbar %>
+
+<div class="row" style="min-height: calc(100vh - 89px);">
+	
+	<% include ./partials/admin_sidebar %>
+
+	<div class = "col-md-10" style="padding-top:20px;">
+		<span class = "welcome-text">Welcome SST Admin!</span>
+	</div>
+
+</div>
+
+
+<% include ./partials/footer %>

@@ -1,12 +1,300 @@
-<% include ./partials/header %>
+<!DOCTYPE HTML>
 
-<div class="container-fluid" style="padding: 0px">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Redesigned Stroke Team internal website!">
+        <title>Stroke Website</title>
 
-<% include ./partials/navbar %>
+        <!-- Bootstrap 4.1.3 CSS ONLY-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/jqueryui/jquery-ui.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="/jqueryui/jquery-ui.min.js"></script>
+        <script src="/js/functions.js"></script>
+        <script src="/timedropper/timedropper.js"></script>
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link rel="stylesheet" href="/timedropper/timedropper.css">
+
+    </head>
+
+    <body class="normal-page">
+
+<div class="container-fluid container-offset">
+
+	<% include ./partials/navbar %>
+
+	<%var sheet="1"
+	//[week,day,start time,end time,class,building]
+	var quarter="Summer 2018"
+	%>
+
+	<%var hours=["8am","9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm","12am"]%>
+	<%var hours_exp=["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00"]%>
+	<%var hours_12=["am","am","am","am","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","am"]%>
+	<%var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]%>
+	
+	<div class = "calendar-container">
+
+		<div class="row calendar-top row-padding">
+			<div class="zero-padding calendar-bottom-border">
+				<div class="row calendar-hour-element row-padding">
+					<div class="col text-right zero-padding">
+						<span class="text-right" style="color: white;">12pm</span>
+					</div>
+				</div>
+			</div>
+			<div class="col zero-padding">
+				<div class="row row-padding calendar-element-left calendar-day-header text-center">
+					<div class="col zero-padding text-center">
+						<span class="days"><b><%=days[0]%></b></span>
+					</div>
+				</div>
+			</div>
+			
+			<%for(j=1;j<7;j++) {%>
+				<div class="col zero-padding">
+					<div class="row row-padding calendar-day-header">
+						<div class="col zero-padding text-center">
+							<span class="days"><b><%=days[j]%></b></span>
+						</div>
+					</div>
+				</div>
+			<%}%>
+		</div>
 
 
+		<div class="row calendar-outer row-padding" id="calendar-outer-box">
+			<div class="zero-padding calendar-bottom-border">
+				<!-- for empty 8am-->
+				<div class="row calendar-offset row-padding">
+					<div class="col text-right zero-padding">
+						<span class="text-right"></span>
+					</div>
+				</div>
+				<% for(i=1; i<16;i++) {%>
+					<div class="row calendar-hour-element row-padding">
+						<div class="col text-right zero-padding">
+							<span class="text-right hours"><%=hours[i]%></span>
+						</div>
+					</div>
+				<%}%>
+			</div>
+
+			<div class="col zero-padding">
+				<%for(i=0; i<16;i++) {%>
+					<div class="row calendar-element calendar-element-left row-padding">
+					</div>
+				<%}%>
+			</div>
+
+			<%for(j=1;j<7;j++) {%>
+				<div class="col zero-padding">
+					<%for(i=0;i<16;i++) {%>
+						<div class="row calendar-element row-padding">
+						</div>
+					<%}%>
+				</div>
+			<%}%>
+
+<!-- 			<div class = "overlay-div" id = "div-1" style= "top: calc(59px + 30px + 14 * 9.63% + 2px); left: height: calc(9.63% * 2 - 4px); min-height:25px;">
+				
+				my name jeff
+			</div> -->
+			<script>
+				<%var data=[["g",0,0,1,"Hi"],["g",1,2,2,"sup fam"],["r",0,4,2,"been better bro :|"],["r",5,5,1,"...same :("]]%>
+				var data=[["g",0,0,1,"Hi this is jeff and i am just trying to take up space"],["g",1,2,2,"sup fam, i am not jeff but i am also trying to take up space"],["r",0,4,2,"I have been better bro and I am trying to take up space"],["r",5,5,1,"...same :( But wait i need to take up more space"],["g",1,6,1,"Hi this is jeff and i am just trying to take up space"],["g",2,8,1,"Hi this is jeff and i am just trying to take up space"],["r",3,9,1,"Hi this is jeff and i am just trying to take up space"],["g",4,11,1,"Hi this is jeff and i am just trying to take up space"],["g",5,12,1,"Hi this is jeff and i am just trying to take up space"],["g",6,14,1,"Hi this is jeff and i am just trying to take up space"]]
+				var hours_exp=["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00"]
+				var hours_12=["am","am","am","am","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","am"]
+
+				//edit Data[x][4] so that it has the correct shit
+				for(i=0; i<data.length;i++) {
+					var comment = data[i][4];
+					var hourStr = "" + hours_exp[data[i][2]] + hours_12[data[i][2]] + "-" + hours_exp[data[i][2] + data[i][3]] + hours_12[data[i][2] + data[i][3]];
+					var innerString = '<div class="container overlay-box"><p class="overlay-time"><b>' + hourStr + '</b></p><div class="overlay-comment">' + comment + '</div></div>';
+					data[i][4] = innerString;
+				}
+
+				for(i=0; i<data.length;i++) {
+					make_overlay_div(i,data[i][0],data[i][1],data[i][2],data[i][3],data[i][4]);
+				}
+
+				$('[id^="expand"]').click(function() {
+					var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
+					var comment = ($(".overlay-comment")[div_num]).textContent;
+					var hour = ($(".overlay-time")[div_num]).textContent
+					expand_div(hour,comment);
+				});
+
+				$('.overlay-div').dblclick(function() {
+					var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
+					var comment = ($(".overlay-comment")[div_num]).textContent;
+					var hour = ($(".overlay-time")[div_num]).textContent
+					console.log(comment);
+					console.log(hour);
+					// alert(comment);
+
+					expand_div(hour,comment);
+				});
+
+			</script>
+		</div>
+	</div>
+
+	<div class="row" style="min-width: 852px;">
+		<div class="col-6 text-center pref-form">
+		<!-- green -->
+			<span class="gr-form-title"><b>Preferred Times</b></span>
+			<form class="green-time-form">
+				<div class = "row">
+					<div class="col-6">
+					 	<div class="form-group form-inline dropdown-times">
+			        		<label class="ml-auto"style="margin-top: 5px" for="green-start-time">Start Time</label>
+<!-- 			        		<select class="mr-auto form-control" id="green-start-time">
+			        			<%// for(i=0;i<hours.length-1;i++) {%>
+			        				<option><%=//hours[i]%></option>
+			        			<%//}%>
+			        		</select> -->
+				        	<input type="text" id="green-start-time" class="mr-auto form-control" style = "width: 90px;">
+			        	</div>
+				        <div class="form-group form-inline dropdown-times">
+				        	<label class="ml-auto" for="green-end-time">End Time</label>
+<!-- 				        	<select class="mr-auto form-control" id="green-end-time">
+				        		<%// for(i=1;i<hours.length;i++) {%>
+				        			<option><%=//hours[i]%></option>
+				        		<%//}%>
+				        	</select> -->
+				        	<input type="text" id="green-end-time" class="mr-auto form-control" style = "width: 90px;"> 
+				        </div>
+					</div>
+					<div class="col-6">
+					    <div class="form-group">
+			    			<textarea class="form-control comments-text-area" id="green-comments" placeholder="Comments..."></textarea>
+			  			</div>
+			  		</div>
+		  		</div>
+
+				<script>
+					$('#green-comments').on('keydown', function(e){
+					    var that = $(this);
+					    if (that.scrollTop()) {
+					        $(this).height(function(i,h){
+					            return h + 15;
+					        });
+					    }
+					});
+				</script>
+
+				<div class="row">
+					<div class="col mx-auto">
+			      		<button type="submit" class="btn btn-primary">Submit</button>
+			    	</div>
+			    </div>
+		    </form>
+		</div>	
+		 
+		<div class="col-6 text-center pref-form">
+		<!-- red -->
+			<span class="gr-form-title"><b>Obligations</b></span>
+			<form class="red-time-form">
+				<div class = "row">
+					<div class="col-6">
+						<div class="form-group form-inline dropdown-times">
+				        	<label class="ml-auto" style="margin-top: 5px" for="red-start-time">Start Time</label>
+				        	
+				        	<!-- <select class="mr-auto form-control" id="shift-type">
+				        		<% //for(i=0;i<hours.length-1;i++) {%>
+				        			<option><%=//hours[i]%></option>
+				        		<%//}%>
+				        	</select> -->
+				        	<input type="text" id="red-start-time" class="mr-auto form-control" style = "width: 90px;">
+				        </div>
+				        <div class="form-group form-inline dropdown-times">
+ 				        	<label class="ml-auto" for="red-end-time">End Time</label>
+<!--				        	<select class="mr-auto form-control" id="shift-type">
+				        		<%// for(i=1;i<hours.length;i++) {%>
+				        			<option><%=//hours[i]%></option>
+				        		<%//}%>
+				        	</select> -->
+				        	<input type="text" id="red-end-time" class="mr-auto form-control" style = "width: 90px;">
+				        </div>
+				    </div>
+				    <div class="col-6">
+				        <div class="form-group">
+		    				<textarea class="form-control comments-text-area" id="red-comments" placeholder="Ex: CHEM 14A in CS50..."></textarea>
+		  					</div>
+		  				</div>
+		  		</div>
+
+			    <script> 
+					$('#red-comments').on('keydown', function(e){
+					    var that = $(this);
+					    if (that.scrollTop()) {
+					        $(this).height(function(i,h){
+					            return h + 15;
+					        });
+					    }
+					});
+				</script>
+				<div class="row">
+					<div class="col mx-auto">
+			    		<button type="submit" class="btn btn-primary">Submit</button>
+			    	</div>
+			    </div>
+			</form>
+		</div>  
+	</div>
+
+<script>
+
+$(document).bind("mousedown", function (e) {
+    
+    // If the clicked element is not the menu
+    if (!$(e.target).parents(".expanded-div").length > 0) {
+        
+        // Hide it
+        $(".expanded-div").remove();
+    }
+});
+
+$(window).on('resize', function(){
+	draw_styles(data);
+});
 
 
-</div>
+$( "#dialog-confirm" ).dialog({
+    resizable: false,
+    height: "auto",
+    width: 400,
+    modal: true,
+    buttons: {
+ 	    "Delete all items": function() {
+        	$( this ).dialog( "close" );
+        },
+        Cancel: function() {
+        	$( this ).dialog( "close" );
+        }
+    }
+   });
 
+
+$('[id^="delete"]').click(function() {
+	var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
+	var div_str = "#overlay-" + div_num;
+	if (confirm("Are you sure you want to delete this event?")) {
+    	$(div_str).remove();
+	}   
+});
+
+$( "#green-start-time" ).timeDropper();
+$( "#green-end-time" ).timeDropper();
+$( "#red-start-time" ).timeDropper();
+$( "#red-end-time" ).timeDropper();
+
+</script>
+
+   
 <% include ./partials/footer %>

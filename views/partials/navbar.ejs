@@ -1,39 +1,50 @@
-<nav class="navbar navbar-expand-md navbar-inverse fixed-top heading-background">
-	<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 mr-auto">
-		<div class="navbar-page-title align-middle">
-			<img src="/images/stroke_logo_4.png" class="rounded" width="80" alt="Student Stroke Team">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top heading-background">
+	<div class="container-fluid" style="padding:0px !important;">
+	
+		<a href="/" class="navbar-brand navbar-page-title align-middle" style="padding-right: 30px">
+			<img src="/images/stroke_logo_4.png" class="rounded" width="50" alt="Student Stroke Team">
+		</a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+
+		<div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item nav-item-pad active">
+					<a href="/stats" class="nav-link nav-middle-links">HOME</a>
+				</li>
+				<li class="nav-item nav-item-pad active dropdown align-middle">
+					<a class="nav-link dropdown-toggle nav-middle-links" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						SHIFT PREFERENCES
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<!-- these need to be changed with js code  -->
+			          	<a class="dropdown-item" href="#">Fall Quarter</a>
+			          	<a class="dropdown-item" href="#">Fall Finals Week</a>
+		        		<a class="dropdown-item" href="#">Winter Break</a>
+		        	</div>
+				</li>
+				<li class="nav-item nav-item-pad active">
+					<a href="#" class="nav-link nav-middle-links">RESOURCES</a>
+				</li>
+			</ul>
+		   	<ul class="navbar-nav ml-auto">
+		   		<li class="nav-item d-none d-lg-block">
+		   			<b class="nav-item nav-item-pad nav-right-links">Gunvant Chaudhari</b>
+		   		</li>
+		   		<li class="nav-item nav-item-pad active">
+					<a href="/logout" class="nav-link nav-right-links">Sign out</a>
+				</li>
+			</ul>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-		<ul class="navbar-nav mr-auto" style="padding-left: 30px">
-			<li class="nav-item">
-				<a href="/stats" class="nav-link nav-middle-links">HOME</a>
-			</li>
-			<li class="nav-item dropdown align-middle">
-				<a class="nav-link dropdown-toggle nav-middle-links" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					SHIFT PREFERENCES
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<!-- these need to be changed with js code  -->
-		          	<a class="dropdown-item" href="#">Fall Quarter</a>
-		          	<a class="dropdown-item" href="#">Fall Finals Week</a>
-	        		<a class="dropdown-item" href="#">Winter Break</a>
-	        	</div>
-			</li>
-			<li class="nav-item">
-				<a href="/neurorounds" class="nav-link nav-middle-links">NEUROROUNDS</a>
-			</li>
-		</ul>
-	</div>
-	<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-	   	<ul class="navbar-nav ml-auto">
-	   		<li class="nav-item">
-	   			<b class="nav-link nav-right-links">Gunvant Chaudhari</b>
-	   		</li>
-	   		<li class="nav-item">
-				<a href="/logout" class="nav-link nav-right-links">Sign out</a>
-			</li>
-		</ul>
 	</div>
 </nav>
+
+<script>
+	$('.navbar .dropdown').hover(function() {
+  		$(this).find('.dropdown-menu').first().stop(true, true).delay(150).slideDown();
+		}, function() {
+  			$(this).find('.dropdown-menu').first().stop(true, true).delay(50).slideUp()
+		});
+</script>

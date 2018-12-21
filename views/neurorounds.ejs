@@ -1,12 +1,35 @@
 <% include ./partials/header %>
 
-<div class="container-fluid" style="padding: 0px">
+<div class="container-fluid" style="height: 100vh;">
 
-<% include ./partials/navbar %>
+	<% include ./partials/navbar %>
+	
+	<%var nr_element = "https://docs.google.com/document/d/e/2PACX-1vQY7iF1pLkFTOFQUG5Do6smRrj35R8b-O5IDfNvwhP7awKa4yvT_bSkeYZlUDOXa5VZ7WfBFF9hRlXl/pub?embedded=true"%>
+	<%var nr_quarter = "summer-2018"%>
 
-
-
-
+	<div class = "row" style="padding: 75px 15px 15px 15px; height: calc(93% - 30px);">
+		<iframe src=<%=nr_element%> class="w-100 nr-iframe" frameborder="0" style="height: 100%"></iframe>
+	</div>
+	<div class = "row" style="padding: 0 30px 0 15px; height:7%">
+		<div class="col-12 text-center">
+			<span> 
+				Sign up for neurorounds&nbsp<a href="https://www.strokeprogram.org/neurorounds-<%=nr_quarter%>.html">here</a>.&nbsp
+			</span>
+			<span> Please contact the external affairs coordinator at sstsstextlaffairs@gmail.com if you have any questions.</span>
+		</div>
+	</div>
+    <div class="row footer" style="height:30px">
+	   	<div class="col-12 text-right">
+	   		<a href="https://www.strokeprogram.org">Visit SST External Website</a>
+	   		<span>|</span>
+	   		<a href="https://www.strokeprogram.org/contact.html">Contact Us</a>
+	   	</div>
+	</div>
 </div>
-
-<% include ./partials/footer %>
+    
+    	<!-- stuff to make the bootstrap buttons work -->
+    	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
