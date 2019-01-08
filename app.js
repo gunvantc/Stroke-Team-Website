@@ -48,8 +48,9 @@ passport.deserializeUser(function(id, done) {
 });
 
 // MONGODB CONFIG
-var dburl = "mongodb://localhost:27017/Stroke_Team";
-mongoose.connect(dburl);
+// var dburl = "mongodb://localhost:27017/Stroke_Team";
+// var dburl = "mongodb://admin_user:Stroke19@ds151994.mlab.com:51994/stroke_team";
+mongoose.connect(process.env.MONGOLAB_URI);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
