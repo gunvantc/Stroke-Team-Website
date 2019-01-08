@@ -1,4 +1,2 @@
 # Stroke-Team-Website
-Redesigned version of the internal Stroke Team Website
-
-Cool test2 test3
+Redesigned version of the internal Stroke Team Website.
