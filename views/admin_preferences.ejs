@@ -4,12 +4,239 @@
 
 	<% include ./partials/navbar %>
 
-<div class="row">
+<div class="row" style="min-height: calc(100vh - 89px);">
 	
 	<% include ./partials/admin_sidebar %>
 	
-	<div class = "col-md-10">
+	<div class = "col-md-10 text-center">
 
+		<h1>Shift Preferences (Under Development)</h1>
+		<br>
+
+
+		<%
+			var year = 2121,
+				season = 'winter quarter',
+				numWeeks = 1,
+				week = 1,
+				error = null;
+
+		%>
+
+		<%var hours=["8am","9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm","12am"]%>
+		<%var hours_exp=["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00"]%>
+		<%var hours_12=["am","am","am","am","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","am"]%>
+		<%var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]%>
+		
+		<div class = "calendar-container">
+
+		<div class="row row-padding"> 
+			<div class="col-4 week-label"> <%=year + ' ' + season%> </div>
+			<div class="col-4 week-label text-center"> 
+				
+				<form>
+					<div class="btn-group">
+						<%if (numWeeks>1) {%>
+							<button type="submit" class="btn btn-outline-light btn-scrl" formmethod="post" formaction="/lscrl"> < </button>
+						<%}%>
+						&nbsp&nbsp&nbsp&nbsp&nbsp
+						<span> W E E K&nbsp&nbsp<%=week%> &nbspof&nbsp  <%=numWeeks%> </span>
+						&nbsp&nbsp&nbsp&nbsp&nbsp
+						<%if (numWeeks>1) {%>
+							<button type="submit" class="btn btn-outline-light btn-scrl" formmethod="post" formaction="/rscrl"> > </button>
+						<%}%>
+					</div>
+				</form>
+
+			</div>
+			<div class="col-4 week-label"> 
+				<form method="post" id="changeStudentForm" action="/admin/preferences/changeStudent" class="form-inline align-items-end">
+					<label for="studentSelect" style="font-size: 0.8em">Student: </label>
+					&nbsp&nbsp
+					<select id="studentSelect" class="form-control" name="studentSelect">
+						<option>Jeff</option>
+						<option>Gunvant</option>
+					</select>
+					&nbsp&nbsp
+					<button class='btn btn-sm btn-secondary'>Go</button>
+				</form>
+			</div>
+<!-- 			<div class="col-4 week-label text-center">
+				
+			</div> 
+			<div class="col-4 week-label"></div> -->
+		</div>
+		
+		<div class="row calendar-top row-padding">
+			<div class="zero-padding calendar-bottom-border">
+				<div class="row calendar-hour-element row-padding">
+					<div class="col text-right zero-padding">
+
+					</div>
+				</div>
+			</div>
+			<div class="col zero-padding">
+				<div class="row row-padding calendar-element-left calendar-day-header text-center">
+					<div class="col zero-padding text-center">
+						<span class="days"><b><%=days[0]%></b></span>
+					</div>
+				</div>
+			</div>
+			
+			<%for(j=1;j<7;j++) {%>
+				<div class="col zero-padding">
+					<div class="row row-padding calendar-day-header">
+						<div class="col zero-padding text-center">
+							<span class="days"><b><%=days[j]%></b></span>
+						</div>
+					</div>
+				</div>
+			<%}%>
+		</div>
+
+
+		<div class="row calendar-outer row-padding" id="calendar-outer-box">
+			<div class="zero-padding calendar-bottom-border">
+				<!-- for empty 8am-->
+				<div class="row calendar-offset row-padding">
+					<div class="col text-right zero-padding">
+						<span class="text-right"></span>
+					</div>
+				</div>
+				<% for(i=1; i<16;i++) {%>
+					<div class="row calendar-hour-element row-padding">
+						<div class="col text-right zero-padding">
+							<span class="text-right hours"><%=hours[i]%></span>
+						</div>
+					</div>
+				<%}%>
+
+				<div class="row row-padding">
+					<div class="col text-right zero-padding calendar-bottom-hour-element">
+						<span class="hours" >12am</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col zero-padding">
+				<%for(i=0; i<16;i++) {%>
+					<div class="row calendar-element calendar-element-left row-padding">
+					</div>
+				<%}%>
+			</div>
+
+			<%for(j=1;j<7;j++) {%>
+				<div class="col zero-padding">
+					<%for(i=0;i<16;i++) {%>
+						<div class="row calendar-element row-padding">
+						</div>
+					<%}%>
+				</div>
+			<%}%>
+
+<!-- 			<div class = "overlay-div" id = "div-1" style= "top: calc(59px + 30px + 14 * 9.63% + 2px); left: height: calc(9.63% * 2 - 4px); min-height:25px;">
+				
+				my name jeff
+			</div> -->
+			<script>
+				//data is in structure [[color,day,sHour,duration,comments]]
+				<%//var data=[["g",0,0,1,"Hi"],["g",1,2,2,"sup fam"],["r",0,4,2,"been better bro :|"],["r",5,5,1,"...same :("]]%>
+				//var data=[["g",0,0,1,"Hi this is jeff and i am just trying to take up space"],["g",1,2,2,"sup fam, i am not jeff but i am also trying to take up space"],["r",0,4,2,"I have been better bro and I am trying to take up space"],["r",5,5,1,"...same :( But wait i need to take up more space"],["g",1,6,1,"Hi this is jeff and i am just trying to take up space"],["g",2,8,1,"Hi this is jeff and i am just trying to take up space"],["r",3,9,1,"Hi this is jeff and i am just trying to take up space"],["g",4,11,1,"Hi this is jeff and i am just trying to take up space"],["g",5,12,1,"Hi this is jeff and i am just trying to take up space"],["g",6,14,1,"Hi this is jeff and i am just trying to take up space"]]
+				
+
+				var hours_exp=["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00"]
+				var hours_12=["am","am","am","am","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","am"]
+
+				var data = [] <%-//JSON.stringify(data)%>;
+
+				var timeString = function(start, dur) {
+					sHr = parseInt(start.split(':')[0]);
+					sMin = parseInt(start.split(':')[1]);
+
+					durHr = parseInt(dur.split(':')[0]);
+					durMin = parseInt(dur.split(':')[1]);
+
+					eHr = Math.floor( (sHr*60 + sMin + durHr*60 + durMin)/60 );
+					eMin = (sHr*60+sMin + durHr*60+durMin)%60;
+
+					sMeri = 'am';
+					eMeri = 'am';
+
+					if (sHr > 12 ){
+						if (sHr<24) {
+							sMeri = 'pm'
+						}
+						sHr-=12
+					}
+
+					if (eHr > 12 ){
+						if (eHr<24) {
+							eMeri = 'pm'
+						}
+						eHr-=12
+					}
+
+					sMinStr = ''+sMin;
+					eMinStr = ''+eMin;
+
+					if (sMin<10){
+						sMinStr = '0' + sMinStr;
+					}
+					if (eMin<10){
+						eMinStr = '0' + eMinStr;
+					}
+
+					// console.log(sHr);
+					// console.log(sMin);
+					// console.log(eHr);
+					// console.log(eMin);
+					// console.log(dur);
+
+
+					return ''+sHr + ':' + sMinStr + sMeri + '-' + eHr + ':' + eMinStr + eMeri; 
+				}
+
+
+				for(i=0; i<data.length;i++) {
+					var comment = data[i][4];
+					var hourStr = timeString(data[i][2],data[i][3]);
+					var innerString = '<div class="container overlay-box"><p class="overlay-time"><b>' + hourStr + '</b></p><div class="overlay-comment">' + comment + '</div></div>';
+					data[i][4] = innerString;
+				}
+
+				for(i=0; i<data.length;i++) {
+					sTime = parseInt(data[i][2].split(':')[0]) + parseInt(data[i][2].split(':')[1])/60;
+					dur = parseInt(data[i][3].split(':')[0]) + parseInt(data[i][3].split(':')[1])/60;
+					make_overlay_div(i,data[i][0],parseInt(data[i][1]),sTime,dur,data[i][4],data[i][5]);
+				}
+
+				$('[id^="expand"]').click(function() {
+					var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
+					var comment = ($(".overlay-comment")[div_num]).textContent;
+					var hour = ($(".overlay-time")[div_num]).textContent
+					expand_div(hour,comment);
+				});
+
+				$('.overlay-div').dblclick(function() {
+					var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
+					var comment = ($(".overlay-comment")[div_num]).textContent;
+					var hour = ($(".overlay-time")[div_num]).textContent
+					console.log(comment);
+					console.log(hour);
+					// alert(comment);
+
+					expand_div(hour,comment);
+				});
+
+			</script>
+		</div>
+	</div>
+
+
+
+		<!-- Dropdown with member names-->
+		<!-- Weeks, scrollable-->
+		<!-- Option to download excel list of preferences, using excel js should be fairly easy -->
 	</div>
 
 </div>

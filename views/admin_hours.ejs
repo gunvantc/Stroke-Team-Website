@@ -1,48 +1,267 @@
-<% include ./partials/header %>
+<!DOCTYPE HTML>
 
-<div class="container-fluid container-offset container-no-side-padding">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Redesigned Stroke Team internal website!">
+        <title>Stroke Website</title>
+
+        <!-- Bootstrap 4.1.3 CSS ONLY-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/jqueryui/jquery-ui.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="/jqueryui/jquery-ui.min.js"></script>
+        <script src="/js/functions.js"></script>
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    </head>
+
+    <body class="normal-page">
+        <!-- <h4>This is from the header!</h4> -->
+
+
+
+<div class="container-fluid container-offset">
 
 	<% include ./partials/navbar %>
 
-<div class="row row-padding">
+<div class="row" style="min-height: calc(100vh - 89px);">
+
+
+<!-- NEED:
+	- Unique quarters availabile
+	- For currently selected quarter (need sessh var for that), query for all time-ins, for each student
+ -->
 
 	<% include ./partials/admin_sidebar %>
 	
-	<div class = "col-md-10">
-		<h1> Student Hours </h1>
-		<table class="table table-striped table-sm">
-		  	<thead class="thead-light">
-		    	<tr>
-			      	<th scope="col">#</th>
-			      	<th scope="col">Student</th>
-			      	<th scope="col">Time-in</th>
-			      	<th scope="col">Duration</th>
-		    	</tr>
-		  	</thead>
-		  	<tbody>
-			    <tr>
-			      	<th scope="row">1</th>
-			      	<td>Mark</td>
-			      	<td>Otto</td>
-			      	<td>@mdo</td>
-			    </tr>
-			    <tr>
-			      	<th scope="row">2</th>
-			      	<td>Jacob</td>
-			      	<td>Thornton</td>
-			      	<td>@fat</td>
-			    </tr>
-			    <tr>
-			      	<th scope="row">3</th>
-			      	<td>Larry</td>
-			      	<td>the Bird</td>
-			      	<td>@twitter</td>
-			    </tr>
-		  	</tbody>
-		</table>
+	<div class = "col-sm-10">
+		<h1 class="text-center"> Student Hours </h1>
+		<br>
+			<div class='row'>
+				
+				<div class="col">
+					<span style="font-size: 1.7em"> <strong> <%=sessQuarter.year + ' ' + sessQuarter.season%>&nbsp&nbsp&nbsp </strong></span>
+			    </div>
+			    <div class="col">
+					<form method="post" action='/admin/student-hours/changeQuarter' class="form-inline">
+			        	<label for="quarter">Change Quarter:&nbsp&nbsp</label>
+			        	<select class="form-control" name="updateQuarter">
+							<%for (var i=0; i<quarters.length; i++) {%>
+								<option><%=quarters[i].year + ' ' + quarters[i].season%></option>
+							<%}%>
+			        	</select>
+			        	&nbsp&nbsp&nbsp
+			        	<button class="btn btn-secondary btn-sm">Submit</button>
+					</form>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8">
+					<div id="accordion">
+
+						<%
+							var findTotTime = function(userID){
+								for (var ii = 0; ii<totals.length; ii++){
+									if (totals[ii]._id.equals(userID)){
+
+										return totals[ii].totalTime;
+									}
+								}
+								return 0;
+							}
+
+							var findLogs = function(userID){
+								for (var ii = 0; ii<allLogs.length; ii++){
+									if (allLogs[ii]._id.equals(userID)){
+										console.log('returning logs')
+										return allLogs[ii].logs;
+									}
+								}
+								return null;
+							}
+
+							var options1 = { year: '2-digit', month: '2-digit', day: '2-digit' };
+							var options2 = { hour: '2-digit', minute: '2-digit' };
+
+						%>
+
+
+						<%for(var i=0; i<users.length; i++) {%>	
+							<div class="card">
+								<div class="card-header" id="student<%=i%>">
+									<h2>
+										<button class="btn" data-toggle="collapse" data-target="#collapse<%=i%>" aria-expanded="true" aria-controls='collapse<%=i%>' style="width: 100%">
+											<div class='row'>
+												<div class="text-left col-6"> <h5> <%=users[i].fName + ' ' + users[i].lName%> </h5></div>
+												<div class="text-right col-6"><%=(findTotTime(users[i]._id)/1000/3600).toFixed(2)%> hrs</div>
+											</div>
+										</button>
+									</h2>
+								</div>
+
+								<div id="collapse<%=i%>" class="collapse" aria-labelledby='heading<%=i%>' data-parent="#accordion">
+									<div class="card-body text-center">
+										<table class="table table-striped table-sm" style="overflow-x: auto;">
+										  	<thead class="thead-light">
+											    	<tr>
+											    		<th scope="col">Date</th>
+											    		<th scope="col">Time-in</th>
+												      	<th scope="col">Duration</th>
+												      	<th scope="col">Type</th>
+												      	<th scope="col">Action</th>
+												    </tr>
+											</thead>
+
+											<tbody>
+
+												<% var theseLogs = findLogs(users[i]._id);
+										  		if(theseLogs != null) {
+											  		for (var j =0; j<theseLogs.length; j++) {%>
+										  			
+										  				<tr>
+												  			<td><%=theseLogs[j].start.toLocaleDateString('en-US',options1)%></td>
+												  			<td><%=theseLogs[j].start.toLocaleTimeString('en-US',options2)%></td>
+												  			<td><%=((theseLogs[j].dur)/1000/3600).toFixed(2)%> hrs</td>
+												  			<td><%=theseLogs[j].shiftType%></td>
+												  			<td> <form action = ''> <h5> 
+												  				<%
+												  					var timeIn = ("0" + theseLogs[j].start.getHours()).slice(-2) + ':' + ("0" + theseLogs[j].start.getMinutes()).slice(-2)
+												  					var timeOut = '';
+												  					if (theseLogs[j].end){
+												  						timeOut = ("0" + theseLogs[j].end.getHours()).slice(-2) + ':' + ("0" + theseLogs[j].end.getMinutes()).slice(-2)
+												  					}
+												  					var dateIn = (theseLogs[j].start.getFullYear()) + '-' + ("0" + (theseLogs[j].start.getMonth()+1)).slice(-2) + '-' + ("0" + theseLogs[j].start.getDate()).slice(-2);
+
+
+												  				%>
+
+												  				<button class="btn btn-outline-dark btn-sm" type="button" onclick="editTimeLog('<%=theseLogs[j]._id%>','<%=users[i].fName%>', '<%=users[i].lName%>', '<%=timeIn%>', '<%=timeOut%>', '<%=dateIn%>', '<%=theseLogs[j].shiftType%>')">
+												  					<span class="oi oi-pencil"></span>
+												  				</button>
+												  				<button class="btn btn-outline-dark btn-sm" formmethod="post" formaction="/admin/student-hours/delete/<%=theseLogs[j]._id%>">
+																	<span class="oi oi-delete"></span>	
+																</button>
+												  			</h5></form></td>	
+										  				</tr>
+
+												  	<%}%>		  	
+										  		<%}%>			  	
+
+										  	</tbody>
+										</table>
+
+										<form action=''> <button class="btn btn-sm" type='button' onclick="addTimeLog('<%=users[i].fName%>','<%=users[i].lName%>')"> Add a new log...</button></form>
+									</div>
+								</div>
+							</div>
+						<%}%>
+
+					</div>
+				</div>
+
+				<div class="col-sm-3 sticky-top hidden" id="editDiv">
+
+					<form method="post" id="editForm">
+						<div class="text-center"> <h5>Edit/Add Time Log</h5> 
+							<button class="btn btn-sm" type='button' style='position:absolute; top:0; right:0;' onclick="closeEditBox()"><span class="oi oi-x"></span></button> 
+						</div>
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="fName" style="padding-top: 10px">Name</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<input type="text" class="form-control form-control-sm" name="fName" value="Gunvant">
+								<input type="text" class="form-control form-control-sm" name="lName" value="Chaudhari">
+							</div>
+						</div>
+
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="dateIn">Date</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateIn">
+							</div>
+						</div>
+	
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="timeIn">Time-In</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<input type="time" value="13:30" class="form-control form-control-sm" name="timeIn">
+							</div>
+						</div>
+
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="timeOut">Time-Out</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<input type="time" value="17:30" class="form-control form-control-sm" name="timeOut">
+							</div>
+						</div>
+
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="fName">Type</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<select class="form-control form-control-sm" name="shiftType">
+									<option value="ED Shift">ED Shift</option>
+									<option value="Neuroround" selected>Neuroround</option>
+								</select>
+							</div>
+						</div>
+
+						<div class='text-center'> <button class='btn btn-outline-primary btn-sm' type="submit"><span class="oi oi-check"></span></button></div>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
 	</div>
+<!-- edit button on each timestamp, add hours thing for each person, opens a new dialog where you can input or change hours -->
 
-</div>
+<script type="text/javascript">
+	var editTimeLog = function(id, fName, lName, timeIn, timeOut, dateIn, shiftType){
+		console.log("editing a log")
+		$('#editDiv').removeClass('hidden');
+		$('input[name="fName"]').val(fName);
+		$('input[name="fName"]').prop("readonly", true);
+		$('input[name="lName"]').val(lName);
+		$('input[name="lName"]').prop("readonly", true);
+		$('input[name="timeIn"]').val(timeIn);
+		$('input[name="timeOut"]').val(timeOut);
+		$('input[name="dateIn"]').val(dateIn);
+		$('select[name="shiftType"]').val(shiftType);
+		$('#editForm').attr('action', ('/admin/student-hours/add/'+id) );
+	}
+	var addTimeLog = function(fName,lName){
+		id = null;
+		$('#editDiv').removeClass('hidden');
+		console.log('adding a log');
+		$('input[name="fName"]').val(fName);
+		$('input[name="fName"]').prop("readonly", true);
+		$('input[name="lName"]').val(lName);
+		$('input[name="lName"]').prop("readonly", true);
+		$('input[name="timeIn"]').val('');
+		$('input[name="timeOut"]').val('');
+		$('input[name="dateIn"]').val('');
+		$('#editForm').attr('action',("/admin/student-hours/add/"+id));
+	}
+	var closeEditBox = function(){
+		console.log('closing box')
+		$('#editDiv').addClass('hidden');
+	}
 
+
+</script>
 
 <% include ./partials/footer %>

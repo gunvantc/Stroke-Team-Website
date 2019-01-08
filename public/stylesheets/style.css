@@ -28,7 +28,12 @@
 .vertical-center .col-md-8{
   padding-right: 0px;
 }
-
+.row-eq-height{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
 
 
 /*Login box stuff below*/
@@ -58,7 +63,7 @@
 .main-div-timecard{
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
-  margin: 2% 20% 1% 20%;
+  margin: 5% 10% 1% 10%;
   padding: 5% 5% 5% 5%;
   align-self: center;
   color: #1C132A; 
@@ -98,6 +103,9 @@
 
 
 /* Timecard stuff below*/
+.hidden{
+  display: none;
+}
 .current-logins-tb-valid, .current-logins-tb-expired {
   max-height: 125px;
   margin: 5px 16.7% 5px 16.7%;
@@ -227,7 +235,7 @@
   background-color: black;
 }*/
 .calendar-hour-element{
-  padding-top: 9px;
+  padding-top: 2px;
   min-height:25px;
   height: 6.25%;
   font-size: 12px;
@@ -241,6 +249,12 @@
 }
 .calendar-bottom-border{
   border-bottom: 1px solid rgb(200,200,200);
+}
+.calendar-bottom-hour-element{
+  font-size: 12px; 
+  padding-right: 2px !important;
+  padding-top: 5px !important;
+
 }
 .row-padding{
   padding-left:0px;
@@ -371,6 +385,20 @@
   color:  #D3D3D3;
   cursor: pointer;
 }
+.day-label{
+  margin-right: 15px;
+}
+.day-select{
+  width: 130px;
+}
+.week-label{
+  border-bottom: 2px solid #d4d4d4;
+  background-color: #456B96;
+  height: 40px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 1.3em;
+  color: white;
+}
 
 
 
@@ -386,7 +414,7 @@
 /*  border: 1px solid #000;
   border-radius: 5px;*/
 }
-.element-box{
+.element-box, .element-box-settings{
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
@@ -400,7 +428,16 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-
+#red-comments, #red-start-time, #red-end-time, #red-day{
+  background-color: #f7e8e8;
+}
+#green-comments, #green-start-time, #green-end-time, #green-day{
+    background-color: #e8f7ea;
+}
+.btn-scrl{
+  font-size: 0.7em;
+  padding: 4px;
+}
 
 
 /* Admin Page */
@@ -412,6 +449,57 @@
   font-size: 20px;
 }
 
+/* Admin Hours Page*/
+.editDivBox{
+  font-size: 0.9em;
+  padding: 3px;
+}
+.editDivBoxCol{
+  padding: 2px;
+}
+.editDivBox input[type="text"], .editDivBox input[type="date"], .editDivBox input[type="time"], .editDivBox select{
+   height: 25px;
+   font-size: 12px;
+   line-height: 15px;
+}
+#editDiv {
+  margin: 65px 10px 10px 10px; 
+  border: 4px solid #1C132A; 
+  border-radius: 5px; 
+  background-color: white; 
+  padding: 10px;
+}
+
+/* Admin Preferences */
+#changeStudentForm select{
+  height: 25px;
+  font-size: 12px;
+  line-height: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  float: right;
+  padding: 2px;
+}
+
+/* Admin Student List */
+.addStudentFormDiv{
+  padding: 10px;
+  margin: 10px;
+  border: 4px solid #1C132A; 
+  border-radius: 5px; 
+  background-color: white; 
+}
+
+.addStudentFormDiv input{
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+
+/* Admin settings */
+.element-box-settings{
+  padding: 15px;
+  margin: 15px;
+}
 
 /* Footer stuff below*/
 .footer {

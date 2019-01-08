@@ -1,9 +1,9 @@
-function make_overlay_div(num, type, day, hour, duration, comment) {
+function make_overlay_div(num, type, day, hour, duration, comment, id) {
 	var div = document.createElement('div');
 	var cal_width = $("#calendar-outer-box").width();
 	var cal_height = $("#calendar-outer-box").height();
 	var box_left = Math.max(day*35 + 35 + 2 , (cal_width-36)/7*day + 35+2);
-	var box_top = 59 + 30 + hour * 0.0625 * cal_height + 1;
+	var box_top = 59 + 30 + 40 + (hour-8) * 0.0625 * cal_height + 1;
 	var box_height = Math.max(0.0625*cal_height*duration-4 +1, 25*duration-4 +1);
 	var box_width = Math.max((cal_width - 35)/7 - 10, 114);
 
@@ -15,7 +15,7 @@ function make_overlay_div(num, type, day, hour, duration, comment) {
 		div.classList.add('overlay-red');
 	}
 
-	comment += '<div class="row row-padding overlay-row overlay-' + type + '" style="position:absolute; bottom:0;width:' + box_width +'px;"><div class="col zero-padding event-button-' + type + ' overlay-right-' + type+'" id="expand-' + num + '">EXPAND</div> <div class="col zero-padding event-button-' + type + '" id="delete-' + num + '">DELETE</div></div>';
+	comment += '<form id="overlay-form-' + num + '" action="/preferences/delete/' + id + '" method = "POST" ' + 'class="row row-padding overlay-row overlay-' + type + '" style="position:absolute; bottom:0;width:' + box_width +'px;"><div class="col zero-padding event-button-' + type + ' overlay-right-' + type+'" id="expand-' + num + '">EXPAND</div> <div class="col zero-padding event-button-' + type + '" id="delete-' + num + '">DELETE</div></form>';
 	div.style.position = 'absolute';
 	div.style.top = box_top + "px";
 	div.style.left = box_left + "px";
@@ -65,7 +65,7 @@ function fade_login_row(){
 		if ($('.login-row').length > 1){
 			$($('.login-row')[1]).fadeTo(fade_time,1, function(){
 				if ($('.login-row').length > 2){
-					$($('.login-row')[1]).fadeTo(fade_time,1)
+					$($('.login-row')[2]).fadeTo(fade_time,1)
 				};
 			})
 		};

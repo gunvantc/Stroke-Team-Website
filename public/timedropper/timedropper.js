@@ -15,7 +15,7 @@
                 _td_options = $.extend({
 
                     format: 'h:mm a',
-                    autoswitch: false,
+                    autoswitch: true,
                     meridians: true,
                     mousewheel: true,
                     setCurrentTime: false,
@@ -181,8 +181,12 @@
                             .replace(/\b(A)\b/g, A);
 
                         _td_input.val(str);
-                    }
 
+                        //ideally i only want to trigger this when there is a change in the string
+                        console.log('triggering');
+                        checkValidity();
+
+                    }
                 };
 
 
@@ -359,7 +363,7 @@
                     // else h = _td_num(_td_span_h.text());
                     // if (!parseInt(_td_span_m.text())) m = _td_num(d.getMinutes());
                     // else m = _td_num(_td_span_m.text());
-                    h = _td_num(0);
+                    h = _td_num(8);
                     m = _td_num(0);
 
                 }
@@ -374,8 +378,6 @@
                 _td_rotation(_td_event_deg);
                 _td_wheel_deg = _td_event_deg;
                 _td_init_deg = -1;
-
-
             }
 
             _td_init();
@@ -426,6 +428,10 @@
                     'left': (_td_input.offset().left + (_td_input.outerWidth() / 2)) - (_td_c.outerWidth() / 2)
                 });
             });
+
+
+
+
 
         });
     };

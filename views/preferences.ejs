@@ -39,11 +39,37 @@
 	
 	<div class = "calendar-container">
 
+		<div class="row row-padding"> 
+			<div class="col-4 week-label"> <%=year + ' ' + season%> </div>
+			<div class="col-4 week-label text-center"> 
+				
+				<form>
+					<div class="btn-group">
+						<%if (numWeeks>1) {%>
+							<button type="submit" class="btn btn-outline-light btn-scrl" formmethod="post" formaction="/lscrl"> < </button>
+						<%}%>
+						&nbsp&nbsp&nbsp&nbsp&nbsp
+						<span> W E E K&nbsp&nbsp<%=week%> &nbspof&nbsp  <%=numWeeks%> </span>
+						&nbsp&nbsp&nbsp&nbsp&nbsp
+						<%if (numWeeks>1) {%>
+							<button type="submit" class="btn btn-outline-light btn-scrl" formmethod="post" formaction="/rscrl"> > </button>
+						<%}%>
+					</div>
+				</form>
+
+			</div>
+			<div class="col-4 week-label"> </div>
+<!-- 			<div class="col-4 week-label text-center">
+				
+			</div> 
+			<div class="col-4 week-label"></div> -->
+		</div>
+		
 		<div class="row calendar-top row-padding">
 			<div class="zero-padding calendar-bottom-border">
 				<div class="row calendar-hour-element row-padding">
 					<div class="col text-right zero-padding">
-						<span class="text-right" style="color: white;">12pm</span>
+
 					</div>
 				</div>
 			</div>
@@ -82,6 +108,12 @@
 						</div>
 					</div>
 				<%}%>
+
+				<div class="row row-padding">
+					<div class="col text-right zero-padding calendar-bottom-hour-element">
+						<span class="hours" >12am</span>
+					</div>
+				</div>
 			</div>
 
 			<div class="col zero-padding">
@@ -105,21 +137,73 @@
 				my name jeff
 			</div> -->
 			<script>
-				<%var data=[["g",0,0,1,"Hi"],["g",1,2,2,"sup fam"],["r",0,4,2,"been better bro :|"],["r",5,5,1,"...same :("]]%>
-				var data=[["g",0,0,1,"Hi this is jeff and i am just trying to take up space"],["g",1,2,2,"sup fam, i am not jeff but i am also trying to take up space"],["r",0,4,2,"I have been better bro and I am trying to take up space"],["r",5,5,1,"...same :( But wait i need to take up more space"],["g",1,6,1,"Hi this is jeff and i am just trying to take up space"],["g",2,8,1,"Hi this is jeff and i am just trying to take up space"],["r",3,9,1,"Hi this is jeff and i am just trying to take up space"],["g",4,11,1,"Hi this is jeff and i am just trying to take up space"],["g",5,12,1,"Hi this is jeff and i am just trying to take up space"],["g",6,14,1,"Hi this is jeff and i am just trying to take up space"]]
+				//data is in structure [[color,day,sHour,duration,comments]]
+				<%//var data=[["g",0,0,1,"Hi"],["g",1,2,2,"sup fam"],["r",0,4,2,"been better bro :|"],["r",5,5,1,"...same :("]]%>
+				//var data=[["g",0,0,1,"Hi this is jeff and i am just trying to take up space"],["g",1,2,2,"sup fam, i am not jeff but i am also trying to take up space"],["r",0,4,2,"I have been better bro and I am trying to take up space"],["r",5,5,1,"...same :( But wait i need to take up more space"],["g",1,6,1,"Hi this is jeff and i am just trying to take up space"],["g",2,8,1,"Hi this is jeff and i am just trying to take up space"],["r",3,9,1,"Hi this is jeff and i am just trying to take up space"],["g",4,11,1,"Hi this is jeff and i am just trying to take up space"],["g",5,12,1,"Hi this is jeff and i am just trying to take up space"],["g",6,14,1,"Hi this is jeff and i am just trying to take up space"]]
 				var hours_exp=["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00"]
 				var hours_12=["am","am","am","am","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","pm","am"]
 
-				//edit Data[x][4] so that it has the correct shit
+				var data = <%-JSON.stringify(data)%>;
+
+				var timeString = function(start, dur) {
+					sHr = parseInt(start.split(':')[0]);
+					sMin = parseInt(start.split(':')[1]);
+
+					durHr = parseInt(dur.split(':')[0]);
+					durMin = parseInt(dur.split(':')[1]);
+
+					eHr = Math.floor( (sHr*60 + sMin + durHr*60 + durMin)/60 );
+					eMin = (sHr*60+sMin + durHr*60+durMin)%60;
+
+					sMeri = 'am';
+					eMeri = 'am';
+
+					if (sHr > 12 ){
+						if (sHr<24) {
+							sMeri = 'pm'
+						}
+						sHr-=12
+					}
+
+					if (eHr > 12 ){
+						if (eHr<24) {
+							eMeri = 'pm'
+						}
+						eHr-=12
+					}
+
+					sMinStr = ''+sMin;
+					eMinStr = ''+eMin;
+
+					if (sMin<10){
+						sMinStr = '0' + sMinStr;
+					}
+					if (eMin<10){
+						eMinStr = '0' + eMinStr;
+					}
+
+					// console.log(sHr);
+					// console.log(sMin);
+					// console.log(eHr);
+					// console.log(eMin);
+					// console.log(dur);
+
+
+					return ''+sHr + ':' + sMinStr + sMeri + '-' + eHr + ':' + eMinStr + eMeri; 
+				}
+
+
 				for(i=0; i<data.length;i++) {
 					var comment = data[i][4];
-					var hourStr = "" + hours_exp[data[i][2]] + hours_12[data[i][2]] + "-" + hours_exp[data[i][2] + data[i][3]] + hours_12[data[i][2] + data[i][3]];
+					var hourStr = timeString(data[i][2],data[i][3]);
 					var innerString = '<div class="container overlay-box"><p class="overlay-time"><b>' + hourStr + '</b></p><div class="overlay-comment">' + comment + '</div></div>';
 					data[i][4] = innerString;
 				}
 
 				for(i=0; i<data.length;i++) {
-					make_overlay_div(i,data[i][0],data[i][1],data[i][2],data[i][3],data[i][4]);
+					sTime = parseInt(data[i][2].split(':')[0]) + parseInt(data[i][2].split(':')[1])/60;
+					dur = parseInt(data[i][3].split(':')[0]) + parseInt(data[i][3].split(':')[1])/60;
+					make_overlay_div(i,data[i][0],parseInt(data[i][1]),sTime,dur,data[i][4],data[i][5]);
 				}
 
 				$('[id^="expand"]').click(function() {
@@ -148,31 +232,39 @@
 		<div class="col-6 text-center pref-form">
 		<!-- green -->
 			<span class="gr-form-title"><b>Preferred Times</b></span>
-			<form class="green-time-form">
+			<form class="green-time-form" method = "post" action="/green_submit">
 				<div class = "row">
 					<div class="col-6">
+						
+						<div class="form-group form-inline">
+							<label class="ml-auto day-label" style="margin-top: 5px">Day</label>
+							<select id="green-day" name="selectDay" class="mr-auto form-control day-select"> 
+								<option>Sunday</option> <option>Monday</option> <option>Tuesday</option> <option>Wednesday</option> <option>Thursday</option> <option>Friday</option> <option>Saturday</option>
+							</select>
+						</div>
+
 					 	<div class="form-group form-inline dropdown-times">
-			        		<label class="ml-auto"style="margin-top: 5px" for="green-start-time">Start Time</label>
+			        		<label class="ml-auto"style="margin-top: 10px" for="green-start-time">Start Time</label>
 <!-- 			        		<select class="mr-auto form-control" id="green-start-time">
 			        			<%// for(i=0;i<hours.length-1;i++) {%>
 			        				<option><%=//hours[i]%></option>
 			        			<%//}%>
 			        		</select> -->
-				        	<input type="text" id="green-start-time" class="mr-auto form-control" style = "width: 90px;">
+				        	<input type="text" id="green-start-time" name="startTime" class="mr-auto form-control" style = "width: 90px;">
 			        	</div>
 				        <div class="form-group form-inline dropdown-times">
-				        	<label class="ml-auto" for="green-end-time">End Time</label>
+				        	<label class="ml-auto" style="margin-right: 5px" for="green-end-time">End Time</label>
 <!-- 				        	<select class="mr-auto form-control" id="green-end-time">
 				        		<%// for(i=1;i<hours.length;i++) {%>
 				        			<option><%=//hours[i]%></option>
 				        		<%//}%>
 				        	</select> -->
-				        	<input type="text" id="green-end-time" class="mr-auto form-control" style = "width: 90px;"> 
+				        	<input type="text" id="green-end-time" name="endTime" class="mr-auto form-control" style = "width: 90px;"> 
 				        </div>
 					</div>
 					<div class="col-6">
 					    <div class="form-group">
-			    			<textarea class="form-control comments-text-area" id="green-comments" placeholder="Comments..."></textarea>
+			    			<textarea class="form-control comments-text-area" name="comments" id="green-comments" placeholder="Comments..."></textarea>
 			  			</div>
 			  		</div>
 		  		</div>
@@ -190,7 +282,7 @@
 
 				<div class="row">
 					<div class="col mx-auto">
-			      		<button type="submit" class="btn btn-primary">Submit</button>
+			      		<button type="submit" id="green-submit" class="btn btn-primary">Submit</button>
 			    	</div>
 			    </div>
 		    </form>
@@ -199,32 +291,39 @@
 		<div class="col-6 text-center pref-form">
 		<!-- red -->
 			<span class="gr-form-title"><b>Obligations</b></span>
-			<form class="red-time-form">
+			<form class="red-time-form"  method="post" action="/red_submit">
 				<div class = "row">
 					<div class="col-6">
+						<div class="form-group form-inline">
+							<label class="ml-auto day-label" style="margin-top: 5px">Day</label>
+							<select id="red-day" name="selectDay" class="mr-auto form-control day-select"> 
+								<option>Sunday</option> <option>Monday</option> <option>Tuesday</option> <option>Wednesday</option> <option>Thursday</option> <option>Friday</option> <option>Saturday</option>
+							</select>
+						</div>
+
 						<div class="form-group form-inline dropdown-times">
-				        	<label class="ml-auto" style="margin-top: 5px" for="red-start-time">Start Time</label>
+				        	<label class="ml-auto" style="margin-top: 10px" for="red-start-time">Start Time</label>
 				        	
 				        	<!-- <select class="mr-auto form-control" id="shift-type">
 				        		<% //for(i=0;i<hours.length-1;i++) {%>
 				        			<option><%=//hours[i]%></option>
 				        		<%//}%>
 				        	</select> -->
-				        	<input type="text" id="red-start-time" class="mr-auto form-control" style = "width: 90px;">
+				        	<input type="text" id="red-start-time" name="startTime" class="mr-auto form-control" style = "width: 90px;">
 				        </div>
 				        <div class="form-group form-inline dropdown-times">
- 				        	<label class="ml-auto" for="red-end-time">End Time</label>
+ 				        	<label class="ml-auto" style="margin-right: 5px" for="red-end-time">End Time</label>
 <!--				        	<select class="mr-auto form-control" id="shift-type">
 				        		<%// for(i=1;i<hours.length;i++) {%>
 				        			<option><%=//hours[i]%></option>
 				        		<%//}%>
 				        	</select> -->
-				        	<input type="text" id="red-end-time" class="mr-auto form-control" style = "width: 90px;">
+				        	<input type="text" id="red-end-time" name="endTime" class="mr-auto form-control" style = "width: 90px;">
 				        </div>
 				    </div>
 				    <div class="col-6">
 				        <div class="form-group">
-		    				<textarea class="form-control comments-text-area" id="red-comments" placeholder="Ex: CHEM 14A in CS50..."></textarea>
+		    				<textarea class="form-control comments-text-area" name="comments" id="red-comments" placeholder="Ex: CHEM 14A in CS50..."></textarea>
 		  					</div>
 		  				</div>
 		  		</div>
@@ -241,7 +340,7 @@
 				</script>
 				<div class="row">
 					<div class="col mx-auto">
-			    		<button type="submit" class="btn btn-primary">Submit</button>
+			    		<button type="submit" id="red-submit" class="btn btn-primary">Submit</button>
 			    	</div>
 			    </div>
 			</form>
@@ -249,6 +348,12 @@
 	</div>
 
 <script>
+var error = <%-JSON.stringify(error);%>
+if (error!=null){
+	alert(error);
+}
+
+
 
 $(document).bind("mousedown", function (e) {
     
@@ -283,11 +388,71 @@ $( "#dialog-confirm" ).dialog({
 
 $('[id^="delete"]').click(function() {
 	var div_num = parseInt($(this)[0].id.replace(/[^\d\.]/g, ''));
-	var div_str = "#overlay-" + div_num;
+	var div_str = "#overlay-form-" + div_num;
 	if (confirm("Are you sure you want to delete this event?")) {
-    	$(div_str).remove();
+    	// $(div_str).remove();
+    	console.log(div_str);
+    	$(div_str).trigger('submit');
+
+    	//To do, update the fricken database with this removal
 	}   
 });
+
+// $( '#l-scrl' ).click(function() {
+// 	console.log('left scroll');
+// 	fetch('/preferences/lscrl', {method: 'POST'}).catch(function(error{
+// 		console.log(error);
+// 	}))
+// })
+
+var checkValidity = function() {
+  console.log('input changed');
+
+  //to do, check if the preference time is valid
+  var grS = $("#green-start-time").val();
+  var grE = $("#green-end-time").val();
+  var redS = $("#red-start-time").val();
+  var redE = $("#red-end-time").val();
+
+
+
+  var grStart = decodeTime(grS);
+  var grEnd = decodeTime(grE);
+  var redStart = decodeTime(redS);
+  var redEnd = decodeTime(redE);
+  
+  if ( grStart[0] < 8  ||  ( (grEnd[0]*60+grEnd[1]) - (grStart[0]*60+grStart[1]) ) <= 0 ) {
+  	$('#green-submit').prop('disabled', true);
+  	console.log('disabling green');
+  } else {
+  	console.log('enabling green');
+  	$('#green-submit').prop('disabled', false);
+  }
+
+  if ( redStart[0] < 8  ||  ( (redEnd[0]*60+redEnd[1]) - (redStart[0]*60+redStart[1]) ) <= 0 ) {
+  	console.log('disabling red');
+  	$('#red-submit').prop('disabled', true);
+  } else {
+  	console.log('enabling red');
+  	$('#red-submit').prop('disabled', false);
+  }
+
+  
+};
+
+var decodeTime = function(time) {
+	var hr = parseInt(time.split(' ')[0].split(':')[0]);
+    var min = parseInt(time.split(' ')[0].split(':')[1]);
+    if (time.split(' ')[1] == 'pm'){
+        hr += 12;
+    }
+    //if 12am, make hour 24
+    if ((hr == 12) && (time.split(' ')[1] == 'am')) {
+        hr += 12;
+    };
+
+    return [hr,min];
+}
 
 $( "#green-start-time" ).timeDropper();
 $( "#green-end-time" ).timeDropper();

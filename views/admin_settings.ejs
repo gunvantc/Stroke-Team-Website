@@ -1,64 +1,224 @@
-<% include ./partials/header %>
+<!DOCTYPE HTML>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Redesigned Stroke Team internal website!">
+        <title>Stroke Website</title>
+
+        <!-- Bootstrap 4.1.3 CSS ONLY-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/jqueryui/jquery-ui.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="/jqueryui/jquery-ui.min.js"></script>
+        <script src="/js/functions.js"></script>
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    </head>
+
+    <body class="normal-page">
+        <!-- <h4>This is from the header!</h4> -->
+
 
 <div class="container-fluid container-offset">
 
 	<% include ./partials/navbar %>
 
-<div class="row">
-	<div class= "col-md-2" style="padding: 0;">
-		<ul class="nav flex-column vertical-navbar">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="#">Recent Time-ins</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Student List</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Student Hours</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Shift Preferences</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Settings</a>
-		  </li>
-		</ul>
-	</div>
-	<div class = "col-md-10">
-		<h1> Student Hours </h1>
-		<table class="table table-striped table-sm">
-		  	<thead class="thead-light">
-		    	<tr>
-			      	<th scope="col">#</th>
-			      	<th scope="col">Student</th>
-			      	<th scope="col">Time-in</th>
-			      	<th scope="col">Duration</th>
-		    	</tr>
-		  	</thead>
-		  	<tbody>
-			    <tr>
-			      	<th scope="row">1</th>
-			      	<td>Mark</td>
-			      	<td>Otto</td>
-			      	<td>@mdo</td>
-			    </tr>
-			    <tr>
-			      	<th scope="row">2</th>
-			      	<td>Jacob</td>
-			      	<td>Thornton</td>
-			      	<td>@fat</td>
-			    </tr>
-			    <tr>
-			      	<th scope="row">3</th>
-			      	<td>Larry</td>
-			      	<td>the Bird</td>
-			      	<td>@twitter</td>
-			    </tr>
-		  	</tbody>
-		</table>
+<div class="row" style="min-height: calc(100vh - 89px);">
+
+	<% include ./partials/admin_sidebar %>
+
+	<div class = "col-md-10 text-center">
+		<h1> Settings </h1>
+		<br>
+
+
+		<!-- ConfigSchema = new Schema({
+    quarter: { 
+        season: String,
+        year: Number
+    },
+    loc: {
+        type: {type: String},
+        coordinates: [Number]
+    },
+    activePrefs: [{
+        season: String,
+        year: Number,
+        weeks: Number
+    }],
+    createdPrefs: [{
+        season: String,
+        year: Number,
+        weeks: Number
+    }]
+}); -->
+		<div class="row justify-content-center">
+			<div class="col-md-auto element-box-settings">
+				<form method="post" action="/admin/admin_settings/changeQuarter">
+					<h5> Current Quarter </h5>
+					<%=curQuarter.year + ' ' + curQuarter.season%>
+					<br><br>
+					<div class="form-inline form-group">
+						<select class="form-control ml-auto" name="curSeason">
+							<option>Winter Quarter</option>
+							<option>Spring Quarter</option>
+							<option>Summer Quarter</option>
+							<option>Fall Quarter</option>
+						</select>
+					
+						<select class="form-control mr-auto" name="curYear">
+							<%for (var i=2019; i<=2050; i++) {%>
+								<option><%=i%> </option>
+							<%}%>
+						</select>
+					</div>
+					<button class="btn btn-primary mx-auto">Change Current Quarter</button>
+				</form>
+			</div>
+			<div class="col-md-auto element-box-settings">
+				<form method="post" action="/admin/admin_settings/setLoc">
+					<h5> Timecard Login Location </h5>
+					<%=timecardLoc.coordinates[0]%> longitude, <%=timecardLoc.coordinates[1]%> latitude
+					<br><br>
+					<div class="form-group form-inline">
+						<input type='text' name="longLat" class="form-control ml-auto" readonly>
+						&nbsp
+						<button class="btn btn-secondary mr-auto" onclick="getLocation()" type="button">Get current location</button>
+						&nbsp
+					</div>
+					<button class="btn btn-primary mx-auto" type="submit">Set location</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-md-auto element-box-settings" style="max-height: 400px; overflow-y: auto;">
+				<h5> Preference Lists</h5>
+				<br>
+				<table class="table table-striped table-sm">
+					<thead class="thead-light">
+						<tr>
+							<th> Quarter </th>
+							<th> Weeks </th>
+							<th> Toggle <span style="color: green;"> Active </span></th>
+							<th> </th> <!-- delete -->
+						</tr>
+					</thead>
+
+					<tbody>
+						<%var checkIfActive = function(pref){
+							for (var i = prefs.length - 1; i >= 0; i--) {
+								if ( prefs[i].season == pref.season && prefs[i].year == pref.year ){
+									return true;
+								}
+							}
+							return false;
+						}
+						%>
+
+
+						<%for (var i=0; i<createdPrefs.length; i++){%>
+							<tr> 
+								<td><%=createdPrefs[i].year + ' ' + createdPrefs[i].season%></td>
+								<td><%=createdPrefs[i].weeks%></td>
+								<td> <form> <button class="btn btn-outline-dark btn-sm" 
+									<%if (checkIfActive(createdPrefs[i])) {%>
+										style="background-color: green;" 
+									<%}%>
+									formmethod="post" formaction="/admin/admin_settings/active_toggle/<%=createdPrefs[i].year%>/<%=createdPrefs[i].season%>">
+									<span class="oi oi-calendar"></span>
+									</button> </form>
+								</td>
+								<td> <form> <button class="btn btn-outline-dark btn-sm" formmethod="post" formaction="/admin/admin_settings/delete/<%=createdPrefs[i].year%>/<%=createdPrefs[i].season%>">
+									<span class="oi oi-circle-x"></span>	
+									</button> </form>
+								</td>
+							</tr>
+						<%}%>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-auto element-box-settings">
+				<form method="post" action="/admin/admin_settings/addPrefQuarter">
+					<h5>Create New Preference List</h5>
+					<br>
+					<div class="form-inline row"> 
+						<select class="form-control ml-auto" name="prefSeason">
+							<option>Winter Quarter</option>
+							<option>Spring Break</option>
+							<option>Spring Quarter</option>
+							<option>Summer Quarter A</option>
+							<option>Summer Quarter C</option>
+							<option>Fall Quarter</option>
+							<option>Winter Break</option>
+						</select>
+						&nbsp
+						<select class="form-control mr-auto" name="prefYear">
+							<%for (var i=2019; i<=2050; i++) {%>
+								<option><%=i%> </option>
+							<%}%>
+						</select>
+					</div>
+					<div class="row form-inline" style="margin-bottom: 10px">
+						<label for="prefWeeks" class="ml-auto" style="font-size: 0.9em" >Number of Weeks: &nbsp</label>
+						<input type="number" name="prefWeeks" min="1" max="10" class="form-control mr-auto">
+					</div>
+
+						<button class="btn btn-primary" type="submit">Create</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Make a table of all preferences, maybe a scrollabe thing, and with a button to make it active, that posts to make a db change. Maybe sorted by active. Maybe active button is togglable or something. -->
+
+		<!-- Query preferences, sort by quarter (year should be fine)  -->
+
+
+		
 	</div>
 
 </div>
+
+<script type="text/javascript">
+	var getLocation = function() {
+		//make the call here
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				$('input[name="longLat"]').val(''+ position.coords.longitude.toFixed(5) + ', ' + position.coords.latitude.toFixed(5));
+			},function(){
+				$('input[name="longLat"]').val('Error in finding location');
+			});
+		} else{
+			$('input[name="longLat"]').val('Please allow location');
+		}
+		
+	}
+</script>
+
+<!-- var configSchema = new Schema({
+    quarter: { 
+        season: String,
+        year: Number
+    },
+    loc: {
+        type: {type: String},
+        coordinates: [Number]
+    },
+    activePrefs: [{
+        season: String,
+        year: Number,
+        weeks: Number
+    }],
+    createdPrefs: [{
+        season: String,
+        year: Number,
+        weeks: Number
+    }]
+}); -->
 
 
 <% include ./partials/footer %>

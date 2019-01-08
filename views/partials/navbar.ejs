@@ -20,18 +20,15 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<!-- these need to be changed with js code  -->
-			          	<a class="dropdown-item" href="#">Fall Quarter</a>
-			          	<a class="dropdown-item" href="#">Fall Finals Week</a>
-		        		<a class="dropdown-item" href="#">Winter Break</a>
+						<%for (var i = 0; i<prefs.length; i++) {%>
+			          		<a class="dropdown-item" href="/preferences/<%=prefs[i].season + '/' + prefs[i].year%>"><%=prefs[i].season%></a>
+		        		<%}%>
 		        	</div>
-				</li>
-				<li class="nav-item nav-item-pad active">
-					<a href="#" class="nav-link nav-middle-links">RESOURCES</a>
 				</li>
 			</ul>
 		   	<ul class="navbar-nav ml-auto">
 		   		<li class="nav-item d-none d-lg-block">
-		   			<b class="nav-item nav-item-pad nav-right-links">Gunvant Chaudhari</b>
+		   			<b class="nav-item nav-item-pad nav-right-links"><%=fullName%></b>
 		   		</li>
 		   		<li class="nav-item nav-item-pad active">
 					<a href="/logout" class="nav-link nav-right-links">Sign out</a>
