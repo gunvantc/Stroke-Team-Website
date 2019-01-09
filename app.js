@@ -1292,7 +1292,7 @@ app.post("/admin/admin_settings/addPrefQuarter", function(req,res){
 
 
 // START SERVER
-app.listen(3000, "localhost", function(){
+app..listen(process.env.PORT || 5000, function(){
     console.log("Stroke Team Server has started on localhost:3000...");
 });
 
