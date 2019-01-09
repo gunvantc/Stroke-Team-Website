@@ -122,7 +122,7 @@ adminUser = new User({
     current: false
 });
 
-User.register(adminUser, 'mynameisjeff', function(err, user) {
+User.register(adminUser, 'stroke19', function(err, user) {
     if (err) {
       console.log("register failed");
       console.log(err);
