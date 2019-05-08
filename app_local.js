@@ -619,7 +619,7 @@ app.get("/preferences",  loggedIn, function(req, res, next){
             req.session.error = null;
         }
 
-         render();
+        render();
         
 
     });
@@ -672,17 +672,17 @@ app.post("/red_submit", function(req,res){
     //add shit to the database
     console.log("add red");
 
-    start = parseInt(req.body.startTime.split(' ')[0].split(':')[0]);
-    console.log(start);
-    var error = null;
-    if (start<8 && start>0){
-        error = 'Preference not saved!\nInvalid start time entered';
-        console.log("this is an error!");
-    } else {
-       addPref(req,res,'red');
-    }
+    // start = parseInt(req.body.startTime.split(' ')[0].split(':')[0]);
+    // console.log(start);
+    // var error = null;
+    // if (start<8 && start>0){
+    //     error = 'Preference not saved!\nInvalid start time entered';
+    //     console.log("this is an error!");
+    // } else {
+    addPref(req,res,'red');
+    //}
     
-    req.session.error = error;
+    // req.session.error = error;
     res.redirect("/preferences");
 });
 app.post("/green_submit", function(req,res){
@@ -1113,21 +1113,142 @@ app.post("/admin/student-hours/delete/:logID",function(req,res){
     })
 });
 
+
 app.get("/admin/preferences", function(req, res){
+	
+	configSetting.find({}, function(err,configs) {
+        if(err)
+            console.log(err)
+
+        thisCon = configs[0];
+
+        var render = function() {
+
+            if (req.session.error){
+                console.log(req.session.error);
+            }
+
+            //reset error 
+            error2 = req.session.error;
+            req.session.error = null;
+
+            console.log(req.session.selected_member);
+            console.log(req.session.week);
+            console.log(req.session.season);
+            console.log(req.session.year);
+
+            preference.find({
+                member: req.session.selected_member, 
+                week: req.session.week, 
+                'quarter.season': req.session.season, 
+                'quarter.year': req.session.year
+            }, function(err,prefs) {
+
+                //create prefs data list
+                prefData = [];
+
+                console.log(prefs.length);
+
+                for (var i = 0; i < prefs.length; i++) {
+                    thisPref = prefs[i];
+
+                    prefData.push(thisPref.arrangedData);
+                }
+
+                console.log(prefData);
+
+                User.find({}, function(err, allUsers){
+        			console.log(req.session.year)
+        			console.log(req.session.season)
+	                res.render("admin_preferences",{ 
+	                    week: req.session.week,
+	                    prefs: thisCon.activePrefs,
+	                    season: req.session.season,
+	                    year: req.session.year,
+	                    numWeeks: req.session.numWeeks,
+	                    error: req.session.error,
+	                    data: prefData,
+	                    fullName: (req.user.fName + ' ' + req.user.lName),
+	                    allMembers: allUsers,
+	                    selecMember: req.session.selected_member,
+	                    selecMemberName: req.session.selected_member_name
+	                });
+	            });
+            })
+        }
+
+        if(!req.session.season) {
+            req.session.season = thisCon.activePrefs[0].season;
+            req.session.year = thisCon.activePrefs[0].year;
+            req.session.numWeeks = thisCon.activePrefs[0].weeks;
+            req.session.week = 1;
+        }
+
+        if(!req.session.numWeeks) {
+            for (var i = 0; i<thisCon.activePrefs.length; i++) {
+                if ((thisCon.activePrefs[i].season == req.session.season) && (thisCon.activePrefs[i].year == req.session.year))
+                    req.session.numWeeks = thisCon.activePrefs[i].weeks;
+            }
+        }
+
+        if(!req.session.selected_member){
+        	req.session.selected_member = req.user.id;
+        	req.session.selected_member_name = req.user.fName + ' ' + req.user.lName;
+        }
+
+        if(!req.session.error){
+            req.session.error = null;
+        }
+
+        render();
+        
+    });
+});
+app.post("/admin/preferences/changeSeason", function(req,res){
+    const seasonNum = req.body.seasonSelect;
+
     configSetting.find({}, function(err,configs) {
         if(err)
             console.log(err)
 
         thisCon = configs[0];
-        
-        res.render("admin_preferences", {
-            prefs: thisCon.activePrefs,
-            fullName: (req.user.fName + ' ' + req.user.lName)
-        });
-        
 
-    });
+	    req.session.season = thisCon.activePrefs[seasonNum].season;
+	    req.session.year = thisCon.activePrefs[seasonNum].year;
+	    req.session.week = 1;
+
+	    //This var will be reset in render function, because it already makes a call then
+	    delete(req.session.numWeeks);
+
+	    res.redirect("/admin/preferences");
+	})
 });
+app.post("/admin/preferences/changeStudent", function(req,res){
+    
+    req.session.selected_member = req.body.studentSelect;
+
+    User.findById(req.session.selected_member, function(err, user) {
+		req.session.selected_member_name = user.fName + ' ' + user.lName;
+		res.redirect("/admin/preferences");
+  	});
+});
+app.post("/admin/preferences/lscrl", function(req, res){
+    //logic for whenever a button is pressed
+    req.session.week -= 1;
+    if (req.session.week < 1) {
+        req.session.week = req.session.numWeeks;
+    }
+    res.redirect("/admin/preferences")
+});
+app.post("/admin/preferences/rscrl", function(req, res){
+    //logic for whenever a button is pressed
+    req.session.week += 1;
+    if (req.session.week > req.session.numWeeks) {
+        req.session.week = 1;
+    }
+    res.redirect("/admin/preferences")
+});
+
 
 app.get("/admin/settings", function(req, res){
     configSetting.find({}, function(err,configs) {

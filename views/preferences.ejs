@@ -451,13 +451,19 @@ var checkValidity = function() {
 var decodeTime = function(time) {
 	var hr = parseInt(time.split(' ')[0].split(':')[0]);
     var min = parseInt(time.split(' ')[0].split(':')[1]);
-    if (time.split(' ')[1] == 'pm'){
+    if (time.split(' ')[1] == 'pm' && hr<12){
         hr += 12;
     }
-    //if 12am, make hour 24
-    if ((hr == 12) && (time.split(' ')[1] == 'am')) {
-        hr += 12;
+
+    //if 12am, make hour 24; if between 12:01 and 12:59, convert to 00:01-00:59
+    if ((hr == 12) && (time.split(' ')[1] == 'am') && min==0) {
+        if (min ==0) {
+        	hr += 12;
+        } else {
+        	hr -= 12
+        }
     };
+
 
     return [hr,min];
 }
