@@ -7,7 +7,7 @@
 	function success(position) {
 		// $('#loc').text('We think you\'re at (' + Math.round(position.coords.longitude) + ', ' + Math.round(position.coords.latitude) + ') and should be at (' + target_loc.coordinates[0] + ', ' + target_loc.coordinates[1] + ')' );
 
-		if (Math.abs(position.coords.longitude-target_loc.coordinates[0]) < 0.01 && Math.abs(position.coords.latitude-target_loc.coordinates[1]) < 0.01) {
+		if (Math.abs(position.coords.longitude-target_loc.coordinates[0]) < 0.001 && Math.abs(position.coords.latitude-target_loc.coordinates[1]) < 0.001) {
 			$('#tc-body').removeClass('hidden');
 		} else{
 			alert('You are not at the appropriate location to access this page');
