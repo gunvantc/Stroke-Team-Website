@@ -267,7 +267,7 @@ app.post("/forgot-pw", function(req,res){
               from: 'ucla.sst.coords@gmail.com',
               to: req.body.username,
               subject: 'SST Password Reset',
-              text: ('Please visit /reset-pw and use this token to reset your password ' + token)
+              text: ('Please visit https://stroketeam.herokuapp.com/reset-pw and use this token to reset your password ' + token)
             };
 
             transporter.sendMail(mailOptions, function(error, info){
