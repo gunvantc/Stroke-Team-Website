@@ -489,54 +489,59 @@ app.get("/timecard", function(req, res){
 
 app.post("/timecard", passport.authenticate("local", { failureRedirect: '/timecard' }), function(req, res){
 
-       //authetication successful
-        //check if any time log is active
-        //if it is, make it inactive and set duration
-        //if no time log is active, make a new time log
+   //authetication successful
+    //check if any time log is active
+    //if it is, make it inactive and set duration
+    //if no time log is active, make a new time log
 
-        console.log("successful authetication");
-        
-        configSetting.find({},function(err,configs) {
+    console.log("successful authetication");
+    
+    configSetting.find({},function(err,configs) {
 
-            thisCon = configs[0];
+        thisCon = configs[0];
+        User.findById(req.user.id, function(err, thisUser){
 
-            userId = req.user.id;
-            timeInLog.find({member: req.user.id, active: true, shiftType: req.body.shiftType}, function(err,timeStamp) {
-                if(err){
-                    conosle.log(err);
-                }
-                if (!timeStamp.length){
-                    //make a new time log
+            if(thisUser.current == true){
+                userId = req.user.id;
+                timeInLog.find({member: req.user.id, active: true, shiftType: req.body.shiftType}, function(err,timeStamp) {
+                    if(err){
+                        conosle.log(err);
+                    }
 
-                    console.log("making new timelog");
+                    if (!timeStamp.length){
+                        //make a new time log
 
-                    var timeLogInstance = new timeInLog({
-                        member: userId,
-                        'quarter.season': thisCon.quarter.season,
-                        'quarter.year': thisCon.quarter.year,
-                        shiftType: req.body.shiftType
-                    });
+                        console.log("making new timelog");
 
-                    timeLogInstance.save();
+                        var timeLogInstance = new timeInLog({
+                            member: userId,
+                            'quarter.season': thisCon.quarter.season,
+                            'quarter.year': thisCon.quarter.year,
+                            shiftType: req.body.shiftType
+                        });
+
+                        timeLogInstance.save();
 
 
-                } else {
-                    console.log("changing old timelog");
-                    
-                    thisStamp = timeStamp[0];
-                    thisStamp.end = Date.now();
-                    thisStamp.active = false;
-                    thisStamp.dur = thisStamp.end.getTime() - thisStamp.start.getTime();
-                    thisStamp.save();
-                }
+                    } else {
+                        console.log("changing old timelog");
+                        
+                        thisStamp = timeStamp[0];
+                        thisStamp.end = Date.now();
+                        thisStamp.active = false;
+                        thisStamp.dur = thisStamp.end.getTime() - thisStamp.start.getTime();
+                        thisStamp.save();
+                    }
 
-            });
+                });
 
+            }
             req.logout();
 
             res.redirect("/timecard");
-        });
+        })
     });
+});
 
 
 // temporary route for preferences
@@ -953,7 +958,8 @@ app.get("/admin/student-list", function(req, res){
 
         thisCon = configs[0];
         
-        User.find({}, function(err, allUsers){
+        User.find({}).sort({current:-1, fName:1}).exec(function(err,allUsers){
+        // User.find({}, function(err, allUsers){
            
 
             res.render("admin_students", {
@@ -981,6 +987,17 @@ app.post("/admin/admin_students/add", function(req,res){
           console.log(err);
         }
 
+        res.redirect('/admin/student-list');
+    });
+});
+app.post("/admin/admin_students/changeActiveState/:uid", function(req,res){
+
+    User.findById(req.params.uid, function(err, user) {
+        if (err)
+            console.log(error)
+
+        user.current = !(user.current);
+        user.save();
         res.redirect('/admin/student-list');
     });
 });
@@ -1014,8 +1031,9 @@ app.get("/admin/student-hours", function(req, res){
                     console.log(allMemberLogs);
 
                     User.find({current: true}).sort("lName").exec(function(err,allUsers){
-                        console.log(allUsers);
-                       timeInLog.distinct('quarter', function(err, all_quarters) {
+                        // console.log(allUsers);
+                        console.log(all_quarters);
+                        timeInLog.distinct('quarter', function(err, all_quarters) {
                            res.render("admin_hours", {
                                 prefs: thisCon.activePrefs,
                                 fullName: (req.user.fName + ' ' + req.user.lName),

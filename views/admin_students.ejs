@@ -28,7 +28,14 @@
 			  		<tr>
 			  			<td><%=allUsers[user].fName + ' ' + allUsers[user].lName%></td>
 			  			<td><%=allUsers[user].username%></td>
-			  			<td><% if(allUsers[user].current == true){%> Y <%}else{%> N <%}%></td>
+			  			<td> <form> <button class="btn btn-outline-dark btn-sm" 
+							<%if (allUsers[user].current == true) {%>
+								style="background-color: green;" 
+							<%}%>
+							formmethod="post" formaction="/admin/admin_students/changeActiveState/<%=allUsers[user].id%>/">
+							<b><%if (allUsers[user].current == true) {%>Y<%} else {%>N<%}%></b>
+							</button> </form>
+						</td>
 			  		</tr>
 			  	<%}%>
 		  	</tbody>

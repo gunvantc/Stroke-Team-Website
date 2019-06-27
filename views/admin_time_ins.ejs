@@ -31,7 +31,7 @@
 		    		</tr>
 		  	</thead>
 		  	<tbody>
-		  		<%var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };%>
+		  		<%var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'America/Los_Angeles' };%>
 			    <%for (var key in entries) {%>	
 			    	<tr>
 			      		<td><%=entries[key].member.fName%> <%=entries[key].member.lName%></td>

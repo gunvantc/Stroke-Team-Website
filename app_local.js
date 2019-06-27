@@ -499,44 +499,49 @@ app.post("/timecard", passport.authenticate("local", { failureRedirect: '/timeca
         configSetting.find({},function(err,configs) {
 
             thisCon = configs[0];
+            User.findById(req.user.id, function(err, thisUser){
 
-            userId = req.user.id;
-            timeInLog.find({member: req.user.id, active: true, shiftType: req.body.shiftType}, function(err,timeStamp) {
-                if(err){
-                    conosle.log(err);
-                }
-                if (!timeStamp.length){
-                    //make a new time log
+				if(thisUser.current == true){
+		            userId = req.user.id;
+		            timeInLog.find({member: req.user.id, active: true, shiftType: req.body.shiftType}, function(err,timeStamp) {
+		                if(err){
+		                    conosle.log(err);
+		                }
 
-                    console.log("making new timelog");
+		                if (!timeStamp.length){
+		                    //make a new time log
 
-                    var timeLogInstance = new timeInLog({
-                        member: userId,
-                        'quarter.season': thisCon.quarter.season,
-                        'quarter.year': thisCon.quarter.year,
-                        shiftType: req.body.shiftType
-                    });
+		                    console.log("making new timelog");
 
-                    timeLogInstance.save();
+		                    var timeLogInstance = new timeInLog({
+		                        member: userId,
+		                        'quarter.season': thisCon.quarter.season,
+		                        'quarter.year': thisCon.quarter.year,
+		                        shiftType: req.body.shiftType
+		                    });
+
+		                    timeLogInstance.save();
 
 
-                } else {
-                    console.log("changing old timelog");
-                    
-                    thisStamp = timeStamp[0];
-                    thisStamp.end = Date.now();
-                    thisStamp.active = false;
-                    thisStamp.dur = thisStamp.end.getTime() - thisStamp.start.getTime();
-                    thisStamp.save();
-                }
+		                } else {
+		                    console.log("changing old timelog");
+		                    
+		                    thisStamp = timeStamp[0];
+		                    thisStamp.end = Date.now();
+		                    thisStamp.active = false;
+		                    thisStamp.dur = thisStamp.end.getTime() - thisStamp.start.getTime();
+		                    thisStamp.save();
+		                }
 
-            });
+		            });
 
-            req.logout();
+	        	}
+	            req.logout();
 
-            res.redirect("/timecard");
+	            res.redirect("/timecard");
+            })
         });
-    });
+});
 
 
 // temporary route for preferences
@@ -953,9 +958,9 @@ app.get("/admin/student-list", function(req, res){
 
         thisCon = configs[0];
         
-        User.find({}, function(err, allUsers){
-           
-
+        User.find({}).sort({current:-1, fName:1}).exec(function(err,allUsers){
+        // User.find({}, function(err, allUsers){
+        	console.log(allUsers);
             res.render("admin_students", {
                 prefs: thisCon.activePrefs,
                 fullName: (req.user.fName + ' ' + req.user.lName),
@@ -984,6 +989,18 @@ app.post("/admin/admin_students/add", function(req,res){
         res.redirect('/admin/student-list');
     });
 });
+app.post("/admin/admin_students/changeActiveState/:uid", function(req,res){
+
+    User.findById(req.params.uid, function(err, user) {
+		if (err)
+			console.log(error)
+
+		user.current = !(user.current);
+		user.save();
+       	res.redirect('/admin/student-list');
+    });
+});
+
 
 app.get("/admin/student-hours", function(req, res){
     configSetting.find({}, function(err,configs) {
@@ -1157,7 +1174,7 @@ app.get("/admin/preferences", function(req, res){
 
                 console.log(prefData);
 
-                User.find({}, function(err, allUsers){
+                User.find({current: true}, function(err, allUsers){
         			console.log(req.session.year)
         			console.log(req.session.season)
 	                res.render("admin_preferences",{ 
