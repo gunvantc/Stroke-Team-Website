@@ -1187,7 +1187,8 @@ app.get("/admin/preferences", function(req, res){
 
                 console.log(prefData);
 
-                User.find({current: true}, function(err, allUsers){
+                User.find({current: true}).sort("fName").exec(function(err,allUsers){
+                // User.find({current: true}, function(err, allUsers){
         			console.log(req.session.year)
         			console.log(req.session.season)
 	                res.render("admin_preferences",{ 
