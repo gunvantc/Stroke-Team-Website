@@ -85,7 +85,7 @@
 							    <tr>
 							      	<th scope="row"><%=i+1%></th>
 							      	<td><%=recentLogs[i][0]%></td>
-							      	<td><%=months[recentLogs[i][1].getMonth()]%>&nbsp<%=recentLogs[i][1].getDate()%>,&nbsp<%=recentLogs[i][1].getHours()%>:<%=recentLogs[i][1].getMinutes().toFixed(2)%> </td>
+							      	<td><%=months[recentLogs[i][1].getMonth()]%>&nbsp<%=recentLogs[i][1].getDate()%>,&nbsp<%=recentLogs[i][1].getHours()%>:<%=recentLogs[i][1].getMinutes()/100.toFixed(2)*100%> </td>
 							      	<!-- <td><%//if(recentLogs[i][2]) {%> 
 							      			<%=//(Math.round(recentLogs[i][2]/1000/3600*4)/4).toFixed(2)%> hrs
 							      		<%//} else {%> 
