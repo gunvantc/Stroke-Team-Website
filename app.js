@@ -1027,13 +1027,23 @@ app.get("/admin/student-hours", function(req, res){
                     { $group: { _id: "$member", logs: { $push: "$$ROOT" }}}
                 ], function(err,allMemberLogs){
 
-                    console.log(allMemberTotals);
-                    console.log(allMemberLogs);
+                    // console.log(allMemberTotals);
+                    // console.log(allMemberLogs);
 
                     User.find({current: true}).sort("lName").exec(function(err,allUsers){
                         // console.log(allUsers);
                         timeInLog.distinct('quarter', function(err, all_quarters) {
-                            console.log(all_quarters);
+                            // console.log(all_quarters);
+                            // console.log(req.session.shQuarter);
+                            all_quarters.sort(function(a,b){
+                                if (a.year < b.year){
+                                    return -1;
+                                }
+                                if (a.year > b.year){
+                                    return 1;
+                                }
+                                return 0;
+                            });
                             res.render("admin_hours", {
                                 prefs: thisCon.activePrefs,
                                 fullName: (req.user.fName + ' ' + req.user.lName),
@@ -1055,6 +1065,7 @@ app.post("/admin/student-hours/add/:logID", function(req,res){ //for the edit fu
 
         console.log('adding new time log');
         dateIn = req.body.dateIn;
+        dateOut = req.body.dateOut;
         timeIn = req.body.timeIn;
         timeOut = req.body.timeOut;
 
@@ -1091,10 +1102,11 @@ app.post("/admin/student-hours/add/:logID", function(req,res){ //for the edit fu
                 console.log(err)
 
             dateIn = req.body.dateIn;
+            dateOut = req.body.dateOut;
             timeIn = req.body.timeIn;
             timeOut = req.body.timeOut;
             startD = new Date(dateIn+ 'T' + timeIn);
-            endD = new Date(dateIn+ 'T' + timeOut);
+            endD = new Date(dateOut+ 'T' + timeOut);
             
             log.start = startD;
             log.end = endD;
@@ -1119,7 +1131,9 @@ app.post("/admin/student-hours/add/:logID", function(req,res){ //for the edit fu
     }
 });
 app.post("/admin/student-hours/changeQuarter", function(req,res){
-    req.session.shQuarter = req.body.updateQuarter;
+    var changeQ = req.body.updateQuarter;
+    var changeQSpl = changeQ.split(" ");
+    req.session.shQuarter = {season: changeQSpl[1].concat(" ",changeQSpl[2]) , year: changeQSpl[0]};
     res.redirect("/admin/student-hours");
 });
 app.post("/admin/student-hours/delete/:logID",function(req,res){

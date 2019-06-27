@@ -143,11 +143,12 @@
 												  						timeOut = ("0" + theseLogs[j].end.getHours()).slice(-2) + ':' + ("0" + theseLogs[j].end.getMinutes()).slice(-2)
 												  					}
 												  					var dateIn = (theseLogs[j].start.getFullYear()) + '-' + ("0" + (theseLogs[j].start.getMonth()+1)).slice(-2) + '-' + ("0" + theseLogs[j].start.getDate()).slice(-2);
+												  					var dateOut = (theseLogs[j].end.getFullYear()) + '-' + ("0" + (theseLogs[j].end.getMonth()+1)).slice(-2) + '-' + ("0" + theseLogs[j].end.getDate()).slice(-2);
 
 
 												  				%>
 
-												  				<button class="btn btn-outline-dark btn-sm" type="button" onclick="editTimeLog('<%=theseLogs[j]._id%>','<%=users[i].fName%>', '<%=users[i].lName%>', '<%=timeIn%>', '<%=timeOut%>', '<%=dateIn%>', '<%=theseLogs[j].shiftType%>')">
+												  				<button class="btn btn-outline-dark btn-sm" type="button" onclick="editTimeLog('<%=theseLogs[j]._id%>','<%=users[i].fName%>', '<%=users[i].lName%>', '<%=timeIn%>', '<%=timeOut%>', '<%=dateIn%>', '<%=dateOut%>', '<%=theseLogs[j].shiftType%>')">
 												  					<span class="oi oi-pencil"></span>
 												  				</button>
 												  				<button class="btn btn-outline-dark btn-sm" formmethod="post" formaction="/admin/student-hours/delete/<%=theseLogs[j]._id%>">
@@ -189,7 +190,7 @@
 
 						<div class='row editDivBox text-center row-padding'>
 							<div class="col-4 editDivBoxCol">
-								<label for="dateIn">Date</label>
+								<label for="dateIn">Date In</label>
 							</div>
 							<div class="col-8 editDivBoxCol">
 								<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateIn">
@@ -202,6 +203,15 @@
 							</div>
 							<div class="col-8 editDivBoxCol">
 								<input type="time" value="13:30" class="form-control form-control-sm" name="timeIn">
+							</div>
+						</div>
+
+						<div class='row editDivBox text-center row-padding'>
+							<div class="col-4 editDivBoxCol">
+								<label for="dateIn">Date Out</label>
+							</div>
+							<div class="col-8 editDivBoxCol">
+								<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateOut">
 							</div>
 						</div>
 
@@ -237,7 +247,7 @@
 <!-- edit button on each timestamp, add hours thing for each person, opens a new dialog where you can input or change hours -->
 
 <script type="text/javascript">
-	var editTimeLog = function(id, fName, lName, timeIn, timeOut, dateIn, shiftType){
+	var editTimeLog = function(id, fName, lName, timeIn, timeOut, dateIn, dateOut, shiftType){
 		console.log("editing a log")
 		$('#editDiv').removeClass('hidden');
 		$('input[name="fName"]').val(fName);
@@ -247,6 +257,7 @@
 		$('input[name="timeIn"]').val(timeIn);
 		$('input[name="timeOut"]').val(timeOut);
 		$('input[name="dateIn"]').val(dateIn);
+		$('input[name="dateOut"]').val(dateOut);
 		$('select[name="shiftType"]').val(shiftType);
 		$('#editForm').attr('action', ('/admin/student-hours/add/'+id) );
 	}
@@ -261,6 +272,7 @@
 		$('input[name="timeIn"]').val('');
 		$('input[name="timeOut"]').val('');
 		$('input[name="dateIn"]').val('');
+		$('input[name="dateOut"]').val('');
 		$('#editForm').attr('action',("/admin/student-hours/add/"+id));
 	}
 	var closeEditBox = function(){
