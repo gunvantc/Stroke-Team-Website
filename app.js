@@ -1032,9 +1032,9 @@ app.get("/admin/student-hours", function(req, res){
 
                     User.find({current: true}).sort("lName").exec(function(err,allUsers){
                         // console.log(allUsers);
-                        console.log(all_quarters);
                         timeInLog.distinct('quarter', function(err, all_quarters) {
-                           res.render("admin_hours", {
+                            console.log(all_quarters);
+                            res.render("admin_hours", {
                                 prefs: thisCon.activePrefs,
                                 fullName: (req.user.fName + ' ' + req.user.lName),
                                 users: allUsers,
