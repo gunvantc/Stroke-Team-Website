@@ -172,72 +172,75 @@
 					</div>
 				</div>
 
-				<div class="col-sm-3 sticky-top hidden" id="editDiv">
+				<div class="col-sm-3 sticky-top">
 
-					<form method="post" id="editForm">
-						<div class="text-center"> <h5>Edit/Add Time Log</h5> 
-							<button class="btn btn-sm" type='button' style='position:absolute; top:0; right:0;' onclick="closeEditBox()"><span class="oi oi-x"></span></button> 
-						</div>
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="fName" style="padding-top: 10px">Name</label>
-							</div>
-							<div class="col-8 editDivBoxCol">
-								<input type="text" class="form-control form-control-sm" name="fName" value="Gunvant">
-								<input type="text" class="form-control form-control-sm" name="lName" value="Chaudhari">
-							</div>
-						</div>
+					<div class="row hidden" id="editDiv">
 
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="dateIn">Date In</label>
+						<form method="post" id="editForm">
+							<div class="text-center"> <h5>Edit/Add Time Log</h5> 
+								<button class="btn btn-sm" type='button' style='position:absolute; top:0; right:0;' onclick="closeEditBox()"><span class="oi oi-x"></span></button> 
 							</div>
-							<div class="col-8 editDivBoxCol">
-								<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateIn">
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="fName" style="padding-top: 10px">Name</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<input type="text" class="form-control form-control-sm" name="fName" value="Gunvant">
+									<input type="text" class="form-control form-control-sm" name="lName" value="Chaudhari">
+								</div>
 							</div>
-						</div>
-	
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="timeIn">Time-In</label>
-							</div>
-							<div class="col-8 editDivBoxCol">
-								<input type="time" value="13:30" class="form-control form-control-sm" name="timeIn">
-							</div>
-						</div>
 
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="dateIn">Date Out</label>
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="dateIn">Date In</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateIn">
+								</div>
 							</div>
-							<div class="col-8 editDivBoxCol">
-								<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateOut">
+		
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="timeIn">Time-In</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<input type="time" value="13:30" class="form-control form-control-sm" name="timeIn">
+								</div>
 							</div>
-						</div>
 
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="timeOut">Time-Out</label>
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="dateIn">Date Out</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<input type="date" value="2018-05-20" class="form-control form-control-sm" name="dateOut">
+								</div>
 							</div>
-							<div class="col-8 editDivBoxCol">
-								<input type="time" value="17:30" class="form-control form-control-sm" name="timeOut">
-							</div>
-						</div>
 
-						<div class='row editDivBox text-center row-padding'>
-							<div class="col-4 editDivBoxCol">
-								<label for="fName">Type</label>
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="timeOut">Time-Out</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<input type="time" value="17:30" class="form-control form-control-sm" name="timeOut">
+								</div>
 							</div>
-							<div class="col-8 editDivBoxCol">
-								<select class="form-control form-control-sm" name="shiftType">
-									<option value="ED Shift">ED Shift</option>
-									<option value="Neuroround" selected>Neuroround</option>
-								</select>
-							</div>
-						</div>
 
-						<div class='text-center'> <button class='btn btn-outline-primary btn-sm' type="submit"><span class="oi oi-check"></span></button></div>
-					</form>
+							<div class='row editDivBox text-center row-padding'>
+								<div class="col-4 editDivBoxCol">
+									<label for="fName">Type</label>
+								</div>
+								<div class="col-8 editDivBoxCol">
+									<select class="form-control form-control-sm" name="shiftType">
+										<option value="ED Shift">ED Shift</option>
+										<option value="Neuroround" selected>Neuroround</option>
+									</select>
+								</div>
+							</div>
+
+							<div class='text-center'> <button class='btn btn-outline-primary btn-sm' type="submit"><span class="oi oi-check"></span></button></div>
+						</form>
+					</div>
 
 				</div>
 

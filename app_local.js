@@ -1030,7 +1030,7 @@ app.get("/admin/student-hours", function(req, res){
                     console.log(allMemberTotals);
                     console.log(allMemberLogs);
 
-                    User.find({current: true}).sort("lName").exec(function(err,allUsers){
+                    User.find({current: true}).sort("fName").exec(function(err,allUsers){
                         console.log(allUsers);
                        timeInLog.distinct('quarter', function(err, all_quarters) {
                             all_quarters.sort(function(a,b){
