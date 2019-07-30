@@ -41,8 +41,8 @@ app.use((err, req, res, next) => {
 // PASSPORT CONFIG
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
-    resave: false,
-    saveUninitialized: false
+    // resave: false,
+    // saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
