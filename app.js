@@ -44,7 +44,7 @@ app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({url: process.env.MONGODB_URI});
+    store: new MongoStore({url: process.env.MONGODB_URI})
 }));
 app.use(passport.initialize());
 app.use(passport.session());
