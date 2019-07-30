@@ -64,7 +64,9 @@
 					<br>
 					<p> <strong> Name: </strong> <%=fName%>&nbsp<%=lName%></p>
 					<p> <strong> Email: </strong> <%=email%></p>					
-					<p> <strong>TB Test Expiration: </strong> <%=months[tb.getMonth()]%> <%=tb.getDate()%>, <%=tb.getFullYear()%></p>
+					<%if (tb) {%><p> 
+						<strong>TB Test Expiration: </strong> <%=months[tb.getMonth()]%> <%=tb.getDate()%>, <%=tb.getFullYear()%></p> 
+					<%}%>
 				</div>
 			</div>
 			<div class = "row">

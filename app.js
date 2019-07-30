@@ -417,19 +417,25 @@ app.get("/timecard", function(req, res){
 
                     console.log(thisMember.fName + " " + thisMember.lName);
 
-                    var tb_date = new Date(thisMember.tb);
-                    var cur_date = new Date(Date.now());
 
-                    console.log(cur_date.getTime());
+                    if (thisMember.tb) {
+                        var tb_date = new Date(thisMember.tb);
+                        var cur_date = new Date(Date.now());
 
-                    if (tb_date<cur_date) {
-                        tb_status.push('expired');
-                        tb_test.push('has expired!');
+                        console.log(cur_date.getTime());
+
+                        if (tb_date<cur_date) {
+                            tb_status.push('expired');
+                            tb_test.push('has expired!');
+                        } else {
+                            tb_status.push('valid');
+                            var one_day = 24*60*60*1000;
+                            var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
+                            tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                        }
                     } else {
                         tb_status.push('valid');
-                        var one_day = 24*60*60*1000;
-                        var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
-                        tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                        tb_test.push('is not on record');
                     }
                 }
 
@@ -448,19 +454,24 @@ app.get("/timecard", function(req, res){
 
                             console.log(thisMember.fName + " " + thisMember.lName);
 
-                            var tb_date = new Date(thisMember.tb);
-                            var cur_date = new Date(Date.now());
+                            if (thisMember.tb) {
+                                var tb_date = new Date(thisMember.tb);
+                                var cur_date = new Date(Date.now());
 
-                            console.log(cur_date.getTime());
+                                console.log(cur_date.getTime());
 
-                            if (tb_date<cur_date) {
-                                tb_status.push('expired');
-                                tb_test.push('has expired!');
+                                if (tb_date<cur_date) {
+                                    tb_status.push('expired');
+                                    tb_test.push('has expired!');
+                                } else {
+                                    tb_status.push('valid');
+                                    var one_day = 24*60*60*1000;
+                                    var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
+                                    tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                                }
                             } else {
                                 tb_status.push('valid');
-                                var one_day = 24*60*60*1000;
-                                var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
-                                tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                                tb_test.push('is not on record');
                             }
                         }
 
@@ -478,19 +489,24 @@ app.get("/timecard", function(req, res){
 
                                     console.log(thisMember.fName + " " + thisMember.lName);
 
-                                    var tb_date = new Date(thisMember.tb);
-                                    var cur_date = new Date(Date.now());
+                                    if (thisMember.tb) {
+                                        var tb_date = new Date(thisMember.tb);
+                                        var cur_date = new Date(Date.now());
 
-                                    console.log(cur_date.getTime());
+                                        console.log(cur_date.getTime());
 
-                                    if (tb_date<cur_date) {
-                                        tb_status.push('expired');
-                                        tb_test.push('has expired!');
+                                        if (tb_date<cur_date) {
+                                            tb_status.push('expired');
+                                            tb_test.push('has expired!');
+                                        } else {
+                                            tb_status.push('valid');
+                                            var one_day = 24*60*60*1000;
+                                            var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
+                                            tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                                        }
                                     } else {
                                         tb_status.push('valid');
-                                        var one_day = 24*60*60*1000;
-                                        var diff_days = Math.round(Math.abs( (tb_date.getTime()-cur_date.getTime()) / one_day ));
-                                        tb_test.push('will expire in ' + diff_days.toString() + ' days!');
+                                        tb_test.push('is not on record');
                                     }
                                 }
 
