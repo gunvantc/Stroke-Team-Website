@@ -49,8 +49,8 @@ mongoose.connect(process.env.MONGODB_URI);
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
-    saveUninitialized: true,
-    store: new MongoStore( {mongooseConnection: mongoose.connection} )
+    saveUninitialized: true
+    // store: new MongoStore( {mongooseConnection: mongoose.connection} )
 }));
 
 // PASSPORT CONFIG
