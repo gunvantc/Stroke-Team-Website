@@ -1,7 +1,7 @@
 // Stroke Team Entry Point
 
 // REQUIRE STATEMENTS
-var express        = require("express"),
+const express        = require("express"),
     app            = express(),
     bodyParser     = require("body-parser"),
     mongoose       = require("mongoose"),
