@@ -82,13 +82,13 @@
 						      	<!-- <th scope="col">Duration</th> -->
 					    	</tr>
 					  	</thead>
+					  	<%var options1 = {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'America/Los_Angeles' };%>
 					  	<tbody>
 					  		<%for(var i=0; i<recentLogs.length; i++) {%>
 							    <tr>
 							      	<th scope="row"><%=i+1%></th>
 							      	<td><%=recentLogs[i][0]%></td>
-							      	<td><%=months[recentLogs[i][1].getMonth()]%>&nbsp<%=recentLogs[i][1].getDate()%>,&nbsp<%=("0" + recentLogs[i][1].getHours()).slice(-2)%>:<%=("0" + recentLogs[i][1].getMinutes()).slice(-2)%> </td>
-							      	<!-- ("0" + theseLogs[j].end.getHours()).slice(-2) + ':' + ("0" + theseLogs[j].end.getMinutes()).slice(-2) -->
+							      	<td><%=recentLogs[i][1].toLocaleDateString("en-US",options1)%>
 							      	<!-- <td><%//if(recentLogs[i][2]) {%> 
 							      			<%=//(Math.round(recentLogs[i][2]/1000/3600*4)/4).toFixed(2)%> hrs
 							      		<%//} else {%> 
@@ -123,6 +123,8 @@
 					    	</form>
 
 						</div>
+						
+						
 						<div class="col-sm-8" style="overflow-x: auto; overflow-y: auto">
 							<table class="table table-striped table-sm">
 							  	<thead class="thead-light">
@@ -132,11 +134,13 @@
 								      	<th scope="col">Duration</th>
 							    	</tr>
 							  	</thead>
+							  	<%var options2 = {month: '2-digit', day: '2-digit', year: '2-digit', timeZone: 'America/Los_Angeles' };%>
+							  	<%var options3 = {hour: '2-digit', minute: '2-digit', timeZone: 'America/Los_Angeles' };%>
 							  	<tbody id="my-hours-table">
 							  		<%for(var key in timeIns) {%>
 								    <tr>
-								      	<td><%=(timeIns[key].start.getMonth()+1)%>/<%=timeIns[key].start.getDate()%>/<%=timeIns[key].start.getFullYear()%100%></td>
-								      	<td><%=timeIns[key].start.getHours()%>:<%=timeIns[key].start.getMinutes()%></td>
+								      	<td><%=timeIns[key].start.toLocaleDateString("en-US",options2)%></td>
+								      	<td><%=timeIns[key].start.toLocaleDateString("en-US",options3)%></td>
 								      	<td>
 								      		<%if(timeIns[key].dur) {%>
 								      			<%=(Math.round(timeIns[key].dur/1000/3600*4)/4).toFixed(2)%> hrs
