@@ -14,7 +14,8 @@ var express        = require("express"),
     ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
     cookieParser   = require("cookie-parser"),
     querystring    = require('querystring'),
-    xkcd           = require('xkcd-api');
+    xkcd           = require('xkcd-api'),
+    MongoStore     = require('connect-mongo'),
     nodemailer     = require('nodemailer');
 
 
@@ -41,8 +42,9 @@ app.use((err, req, res, next) => {
 // PASSPORT CONFIG
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
-    // resave: false,
-    // saveUninitialized: false
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({url: process.env.MONGODB_URI});
 }));
 app.use(passport.initialize());
 app.use(passport.session());
