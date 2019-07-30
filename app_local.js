@@ -1,7 +1,7 @@
 // Stroke Team Entry Point
 
 // REQUIRE STATEMENTS
-var express        = require("express"),
+const express        = require("express"),
     app            = express(),
     bodyParser     = require("body-parser"),
     mongoose       = require("mongoose"),
@@ -14,7 +14,9 @@ var express        = require("express"),
     ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
     cookieParser   = require("cookie-parser"),
     querystring    = require('querystring'),
-    xkcd           = require('xkcd-api');
+    xkcd           = require('xkcd-api'),
+    session        = require('express-session'),
+    MongoStore     = require('connect-mongo')(session),
     nodemailer     = require('nodemailer');
 
 
@@ -24,25 +26,32 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set("view engine", "ejs");
 
-// ERROR HANDLING
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// // ERROR HANDLING
+// app.use((req, res, next) => {
+//   const err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
-app.use((err, req, res, next) => {
-  res.locals.error = err;
-  const status = err.status || 500;
-  res.status(status);
-  res.render('error');
-});
+// app.use((err, req, res, next) => {
+//   res.locals.error = err;
+//   const status = err.status || 500;
+//   res.status(status);
+//   console.log(err)
+//   res.redirect('/');
+// });
+
+// MONGODB CONFIG
+var dburl = "mongodb://localhost:27017/Stroke_Team";
+// var dburl = "mongodb://admin_user:Stroke19@ds151994.mlab.com:51994/stroke_team";
+mongoose.connect(dburl);
 
 // PASSPORT CONFIG
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore( {mongooseConnection: mongoose.connection} )
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -61,10 +70,7 @@ passport.deserializeUser(function(id, done) {
   // console.log("deserializing");
 });
 
-// MONGODB CONFIG
-var dburl = "mongodb://localhost:27017/Stroke_Team";
-// var dburl = "mongodb://admin_user:Stroke19@ds151994.mlab.com:51994/stroke_team";
-mongoose.connect(dburl);
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
