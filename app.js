@@ -1471,5 +1471,6 @@ app.listen(process.env.PORT || 3000, function(){
 
 app.use((err, req, res, next) => {
   // log the error...
+  console.log(err);
   res.sendStatus(err.httpStatusCode).json(err)
 })
