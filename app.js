@@ -50,7 +50,7 @@ app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore( mongooseConnection: mongoose.connection)
+    store: new MongoStore( {mongooseConnection: mongoose.connection} )
 }));
 
 // PASSPORT CONFIG
