@@ -216,7 +216,7 @@
 .calendar-outer{
   width: 100%;
   min-width: 852px;
-  min-height: 900px;
+  min-height: 600px;
   background-color: white;
 }
 .calendar-top, .calendar-top-header{
@@ -240,11 +240,11 @@
 .calendar-offset{
   width:6%;
   min-width: 35px;
-  height: calc(2.78% + 10px);
+  height: calc(1% + 11px);
   min-height:5px;
 }
 .calendar-element{
-  min-height:25px;
+  min-height:15px;
   height: 6.25%;
   border-top-width: 0px;
 }
@@ -259,7 +259,7 @@
 }*/
 .calendar-hour-element{
   padding-top: 2px;
-  min-height:25px;
+  min-height:15px;
   height: 6.25%;
   font-size: 12px;
 }
@@ -448,8 +448,10 @@
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
-  margin: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
+
 .element-box h1{
   font-weight: bold;
   font-size: 20px;
