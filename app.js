@@ -118,9 +118,10 @@ var configSchema = new Schema({
     }],
     makeUnique: {type: String, unique: true}
 });
-// configSchema.index({"loc":"2dsphere"});
+configSchema.index({"loc":"2dsphere"});
 // configScehma.index({"activePrefs.season": 1, "activePrefs.year": 1});
-// var configSetting = mongoose.model('configSetting',configSchema);
+var configSetting = mongoose.model('configSetting',configSchema);
+
 // myConfig = new configSetting({ 
 //     quarter: {season: 'Winter Quarter', year:2019},
 //     "loc": { "type":"Point", "coordinates":[-118.123,34.123]},
