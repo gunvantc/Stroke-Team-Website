@@ -24,6 +24,20 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set("view engine", "ejs");
 
+// ERROR HANDLING
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  res.locals.error = err;
+  const status = err.status || 500;
+  res.status(status);
+  res.render('landing-login');
+});
+
 // PASSPORT CONFIG
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
@@ -97,37 +111,37 @@ var configSchema = new Schema({
     }],
     makeUnique: {type: String, unique: true}
 });
-configSchema.index({"loc":"2dsphere"});
+// configSchema.index({"loc":"2dsphere"});
 // configScehma.index({"activePrefs.season": 1, "activePrefs.year": 1});
-var configSetting = mongoose.model('configSetting',configSchema);
-myConfig = new configSetting({ 
-    quarter: {season: 'Winter Quarter', year:2019},
-    "loc": { "type":"Point", "coordinates":[-118.123,34.123]},
-    activePrefs: [ {season: 'Winter Quarter', year:2019, weeks: 1}, {season: 'Winter Finals', year:2019, weeks: 1}, {season: 'Spring Break', year:2019, weeks: 2}],
-    createdPrefs: [ {season: 'Winter Quarter', year:2019, weeks: 1}, {season: 'Winter Finals', year:2019, weeks: 1}, {season: 'Spring Break', year:2019, weeks: 2}],
-    makeUnique: "my name is jeff"
-});
-myConfig.save(function(err,myConfig) {
-    if (err) return console.error(err);
-});
+// var configSetting = mongoose.model('configSetting',configSchema);
+// myConfig = new configSetting({ 
+//     quarter: {season: 'Winter Quarter', year:2019},
+//     "loc": { "type":"Point", "coordinates":[-118.123,34.123]},
+//     activePrefs: [ {season: 'Winter Quarter', year:2019, weeks: 1}, {season: 'Winter Finals', year:2019, weeks: 1}, {season: 'Spring Break', year:2019, weeks: 2}],
+//     createdPrefs: [ {season: 'Winter Quarter', year:2019, weeks: 1}, {season: 'Winter Finals', year:2019, weeks: 1}, {season: 'Spring Break', year:2019, weeks: 2}],
+//     makeUnique: "my name is jeff"
+// });
+// myConfig.save(function(err,myConfig) {
+//     if (err) return console.error(err);
+// });
 
 
-//setting up admin account for access
-adminUser = new User({
-    username: 'sstcoords@gmail.com',
-    fName: 'Admin',
-    lName: 'Coord',
-    tb: new Date(2000,0,1),
-    admin: true,
-    current: false
-});
+// //setting up admin account for access
+// adminUser = new User({
+//     username: 'sstcoords@gmail.com',
+//     fName: 'Admin',
+//     lName: 'Coord',
+//     tb: new Date(2000,0,1),
+//     admin: true,
+//     current: false
+// });
 
-User.register(adminUser, 'stroke19', function(err, user) {
-    if (err) {
-      console.log("register failed");
-      console.log(err);
-    }
-})
+// User.register(adminUser, 'stroke19', function(err, user) {
+//     if (err) {
+//       console.log("register failed");
+//       console.log(err);
+//     }
+// })
 
 
 // ROUTES
