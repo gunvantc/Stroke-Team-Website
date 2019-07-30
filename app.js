@@ -39,13 +39,21 @@ app.use((err, req, res, next) => {
   res.render('landing-login');
 });
 
-// PASSPORT CONFIG
+// MONGODB CONFIG
+// var dburl = "mongodb://localhost:27017/Stroke_Team";
+// var dburl = "mongodb://admin_user:Stroke19@ds151994.mlab.com:51994/stroke_team";
+mongoose.connect(process.env.MONGODB_URI);
+
+
+// SESSION CONFIG
 app.use(require("express-session")({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({url: process.env.MONGODB_URI})
+    store: new MongoStore( mongooseConnection: mongoose.connection)
 }));
+
+// PASSPORT CONFIG
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,10 +71,6 @@ passport.deserializeUser(function(id, done) {
   // console.log("deserializing");
 });
 
-// MONGODB CONFIG
-// var dburl = "mongodb://localhost:27017/Stroke_Team";
-// var dburl = "mongodb://admin_user:Stroke19@ds151994.mlab.com:51994/stroke_team";
-mongoose.connect(process.env.MONGODB_URI);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
