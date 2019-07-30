@@ -15,7 +15,8 @@ var express        = require("express"),
     cookieParser   = require("cookie-parser"),
     querystring    = require('querystring'),
     xkcd           = require('xkcd-api'),
-    MongoStore     = require('connect-mongo'),
+    session        = require('express-session'),
+    MongoStore     = require('connect-mongo')(session),
     nodemailer     = require('nodemailer');
 
 
@@ -46,11 +47,11 @@ mongoose.connect(process.env.MONGODB_URI);
 
 
 // SESSION CONFIG
-app.use(require("express-session")({
+app.use(session({
     secret: "i ain't gettin paid for this >:(",
     resave: false,
-    saveUninitialized: true
-    // store: new MongoStore( {mongooseConnection: mongoose.connection} )
+    saveUninitialized: true,
+    store: new MongoStore( {mongooseConnection: mongoose.connection} )
 }));
 
 // PASSPORT CONFIG
