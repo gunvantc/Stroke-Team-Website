@@ -1,5 +1,5 @@
 # Stroke-Team-Website
-Redesigned version of the internal Stroke Team Website: stroketeam.herokuapp.com
+Redesigned version of the internal Stroke Team Website: https://stroketeam.herokuapp.com
 
 Implemented by Gunvant Chaudhari and Prateek Singh in 2018-19.
 
